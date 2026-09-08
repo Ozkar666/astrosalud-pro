@@ -1163,8 +1163,11 @@ function showFullTransitReport() {
 
             day.aspects.forEach(a => {
                 const aColor = a.intensity === 'pico' ? '#ef4444' : a.intensity === 'fuerte' ? '#f59e0b' : a.intensity === 'moderado' ? '#60a5fa' : '#22c55e';
+                const transitPos = day.planetPositions.find(p => p.name === a.transitPlanet);
+                const transitPosText = transitPos ? `${transitPos.signSymbol} ${transitPos.sign} ${transitPos.degree}°${String(transitPos.minute).padStart(2,'0')}'` : '';
                 html += `<div class="aspect-card">`;
                 html += `<div class="aspect-header"><strong>${a.transitSymbol} ${a.transitPlanet} ${a.symbol} ${a.natalSymbol} ${a.natalPlanet}</strong> <span class="badge" style="background:${aColor};color:#fff">${a.intensity}</span> <span class="aspect-orb">orbe ${a.orb.toFixed(1)}°</span></div>`;
+                html += `<div class="aspect-date-info">📅 <strong>${a.date}</strong>${transitPosText ? ` — ${a.transitSymbol} ${a.transitPlanet} en ${transitPosText}` : ''}</div>`;
                 html += `<div class="aspect-risk-bars">`;
                 html += `<div class="risk-bar-item"><span>${t('behavioralRisk')}</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.min(a.riskArea.behavioral, 100)}%;background:${a.riskArea.behavioral > 60 ? '#ef4444' : a.riskArea.behavioral > 30 ? '#f59e0b' : '#22c55e'}"></div></div><span>${a.riskArea.behavioral}%</span></div>`;
                 html += `<div class="risk-bar-item"><span>${t('socialRisk')}</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.min(a.riskArea.social, 100)}%;background:${a.riskArea.social > 60 ? '#ef4444' : a.riskArea.social > 30 ? '#f59e0b' : '#22c55e'}"></div></div><span>${a.riskArea.social}%</span></div>`;

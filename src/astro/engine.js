@@ -534,7 +534,7 @@ export class NatalChart {
             days.push({
                 date: dateObj.toISOString().split('T')[0],
                 dayNum: d + 1,
-                planets: transitPlanets,
+                planetPositions: transitPlanets,
                 aspects: dayAspects,
                 signChanges: signChanges,
                 stations: stations

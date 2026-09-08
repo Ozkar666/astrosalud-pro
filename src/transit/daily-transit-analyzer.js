@@ -49,7 +49,7 @@ function getRitualData(transitPlanet, natalPlanet) {
   };
 }
 
-function processAspect(aspect) {
+function processAspect(aspect, dayDate) {
   const { transitPlanet, transitSymbol, natalPlanet, natalSymbol, type, orb } = aspect;
 
   const dbEntry = DAILY_TRANSIT_DATABASE[transitPlanet]?.[natalPlanet];
@@ -81,6 +81,7 @@ function processAspect(aspect) {
     symbol: getAspectSymbol(type),
     orb,
     exactness: clampScore((1 - Math.min(orb, 10) / 10) * 100),
+    date: dayDate,
     riskArea,
     behavioral: behavioralDesc,
     social: socialDesc,
@@ -170,11 +171,11 @@ function buildWeeklyForecast(dailyReport) {
     const riskLevel = getDayRiskLevel(avgRisk);
     let summary;
     if (avgRisk > 60) {
-      summary = `Semana intensa dominada por ${dominantPlanet}. Se recomienda precaución y uso de rituales de protección.`;
+      summary = `Semana ${Math.floor(i / 7) + 1} del mes intensa dominada por ${dominantPlanet}. Se recomienda precaución y uso de rituales de protección durante esta semana del mes.`;
     } else if (avgRisk >= 30) {
-      summary = `Semana moderada con influencia de ${dominantPlanet}. Momento de equilibrio entre acción y reflexión.`;
+      summary = `Semana ${Math.floor(i / 7) + 1} del mes moderada con influencia de ${dominantPlanet}. Momento de equilibrio entre acción y reflexión.`;
     } else {
-      summary = `Semana tranquila. Energías favorables para la planificación y el autocuidado.`;
+      summary = `Semana ${Math.floor(i / 7) + 1} del mes tranquila. Energías favorables para la planificación y el autocuidado.`;
     }
 
     weeks.push({
@@ -315,8 +316,8 @@ function generateSummary(dailyReport) {
     date: d.date,
     risk: d.totalRisk,
     reason: d.aspects.length > 0
-      ? `${d.aspects.length} aspecto(s) activo(s) — ${d.aspects.map(a => `${a.transitPlanet} ${a.type} ${a.natalPlanet}`).join(', ')}`
-      : 'Múltiples influencias planetarias'
+      ? `Día ${d.dayNum} del mes: ${d.aspects.length} aspecto(s) activo(s) — ${d.aspects.map(a => `${a.transitPlanet} ${a.type} ${a.natalPlanet}`).join(', ')}`
+      : `Día ${d.dayNum} del mes: múltiples influencias planetarias activas`
   }));
 
   const safestDays = sorted.slice(-3).reverse().map(d => ({
@@ -327,13 +328,13 @@ function generateSummary(dailyReport) {
 
   let description;
   if (overallRisk > 75) {
-    description = 'Mes de muy alto riesgo con múltiples aspectos tensos. Se requiere máxima precaución y uso regular de rituales de protección. Evitar decisiones importantes y situaciones de conflicto.';
+    description = 'Este mes presenta un riesgo muy alto con múltiples aspectos tensos entre los tránsitos planetarios y tu carta natal. Se requiere máxima precaución y uso regular de rituales de protección. Evitar decisiones importantes y situaciones de conflicto durante todo el período mensual.';
   } else if (overallRisk > 50) {
-    description = 'Mes de riesgo alto con varios aspectos desafiantes. Se recomienda prudencia, meditación diaria y uso de piedras protectoras. Momento de canalizar la energía en actividades constructivas.';
+    description = 'Este mes tiene un riesgo alto con varios aspectos desafiantes activos. Se recomienda prudencia diaria, meditación y uso de piedras protectoras a lo largo de todo el mes. Momento de canalizar la energía en actividades constructivas.';
   } else if (overallRisk > 25) {
-    description = 'Mes de riesgo moderado con equilibrio entre aspectos armónicos y tensos. Buen momento para la planificación y el crecimiento personal, manteniendo la atención en los días más intensos.';
+    description = 'Mes de riesgo moderado con equilibrio entre aspectos armónicos y tensos durante el período mensual. Buen momento para la planificación y el crecimiento personal, manteniendo la atención en los días más intensos del mes.';
   } else {
-    description = 'Mes tranquilo con predominio de aspectos armónicos. Energías favorables para iniciar proyectos, fortalecer relaciones y cuidar la salud. Aprovechar para establecer nuevas rutinas.';
+    description = 'Mes tranquilo con predominio de aspectos armónicos durante todo el período. Energías favorables para iniciar proyectos, fortalecer relaciones y cuidar la salud a lo largo del mes. Aprovechar para establecer nuevas rutinas.';
   }
 
   return {
@@ -358,7 +359,7 @@ export function analyzeDailyTransits(dailyTransits, natalChart) {
 
     if (day.aspects && Array.isArray(day.aspects)) {
       for (const aspect of day.aspects) {
-        const processed = processAspect(aspect);
+        const processed = processAspect(aspect, date);
         if (processed) {
           processedAspects.push(processed);
           dayTotalRisk += processed.riskScore;

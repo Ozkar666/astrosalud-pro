@@ -1527,6 +1527,8 @@ footer {
 .day-detail-header { font-size: 1.1rem; margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .retrograde-note { color: #f59e0b; font-size: 0.85rem; font-style: italic; margin: 0.3rem 0; }
 .aspect-card { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 1rem; margin: 0.8rem 0; }
+.aspect-header { font-size: 1rem; margin-bottom: 0.4rem; }
+.aspect-date-info { font-size: 0.85rem; color: #93c5fd; margin-bottom: 0.6rem; padding: 0.3rem 0.6rem; background: rgba(147,197,253,0.08); border-radius: 6px; display: inline-block; }
 .aspect-header { font-size: 1rem; margin-bottom: 0.6rem; }
 .aspect-orb { font-size: 0.8rem; color: #94a3b8; margin-left: 0.5rem; }
 .aspect-risk-bars { margin: 0.6rem 0; }
