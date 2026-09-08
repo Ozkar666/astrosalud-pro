@@ -32,6 +32,9 @@ export default {
         });
       }
 
+      console.log('Token present:', !!env.MP_ACCESS_TOKEN, 'Token length:', env.MP_ACCESS_TOKEN?.length);
+      console.log('Request body:', JSON.stringify({ token, paymentMethodId, installments, amount, email }));
+
       // Create payment with Mercado Pago API
       const mpResponse = await fetch('https://api.mercadopago.com/v1/payments', {
         method: 'POST',
@@ -66,7 +69,19 @@ export default {
         }),
       });
 
-      const paymentResult = await mpResponse.json();
+      console.log('MP API response status:', mpResponse.status);
+
+      const responseText = await mpResponse.text();
+      console.log('MP API response body:', responseText.substring(0, 500));
+      let paymentResult;
+      try {
+        paymentResult = JSON.parse(responseText);
+      } catch {
+        return new Response(JSON.stringify({ error: 'Invalid response from Mercado Pago', status: mpResponse.status, statusText: mpResponse.statusText, raw: responseText.substring(0, 500) }), {
+          status: 502,
+          headers: { ...headers, 'Content-Type': 'application/json' },
+        });
+      }
 
       if (mpResponse.ok) {
         return new Response(JSON.stringify({
@@ -88,7 +103,8 @@ export default {
         });
       }
     } catch (err) {
-      return new Response(JSON.stringify({ error: 'Internal server error' }), {
+      console.error('Payment error:', err.message, err.stack);
+      return new Response(JSON.stringify({ error: 'Internal server error', detail: err.message }), {
         status: 500,
         headers: { ...headers, 'Content-Type': 'application/json' },
       });
