@@ -7,6 +7,7 @@ import { NatalChart } from './astro/engine.js';
 import { generateChartSVG } from './astro/chart-renderer.js';
 import { searchCities, estimateTimezoneOffset } from './utils/geocoder.js';
 import { analyzeHealthTendencies, analyzeTransits, setAnalysisLanguage, getTranslatedPracticalAdvice, translatePlanet, translateSign } from './health/analysis.js';
+import { analyzeDailyTransits, getDayRiskLevel } from './transit/daily-transit-analyzer.js';
 import { STRINGS } from './i18n/translations.js';
 import { initSentry, captureError } from './utils/sentry.js';
 
@@ -55,6 +56,7 @@ let lastChart = null;
 let lastHealth = null;
 let lastTransitAnalysis = null;
 let lastTransitData = null;
+let lastDailyTransitReport = null;
 let lastBirthPlace = '';
 let lastMedicalHistory = null;
 let selectedCity = null;
@@ -332,6 +334,11 @@ async function handleTransits() {
         const transitAnalysis = analyzeTransits(lastChart, transitData);
         lastTransitAnalysis = transitAnalysis;
         lastTransitData = transitData;
+
+        const dailyTransits = chartEngine.calculateTransitsForMonth(lastChart, tYear, tMonth, tDay, coords.lat, coords.lon, coords.tz);
+        const dailyReport = analyzeDailyTransits(dailyTransits, lastChart);
+        lastDailyTransitReport = dailyReport;
+
         renderTransitReport(transitAnalysis, transitData);
     } catch (err) {
         captureError(err, { phase: 'transit-calculation', transitDate });
@@ -1091,7 +1098,6 @@ function showFullTransitReport() {
     const vi = lastTransitAnalysis.vulnerabilityIndex;
     let html = '<div class="section-card"><h2>' + t('transitReport') + ' <span style="color:#22c55e;font-size:0.8em;">✓ ' + t('formSuccessTitle') + '</span></h2>';
 
-    // Vulnerability Index
     const viColor = vi.score <= 15 ? '#22c55e' : vi.score <= 40 ? '#60a5fa' : vi.score <= 65 ? '#f59e0b' : '#ef4444';
     html += '<div class="vulnerability-index">';
     html += `<h3>${t('vulnIndex')}</h3>`;
@@ -1105,7 +1111,109 @@ function showFullTransitReport() {
     }
     html += '</div>';
 
-    // FULL Transit Health Interpretations (unlocked after payment)
+    if (lastDailyTransitReport) {
+        const dr = lastDailyTransitReport;
+
+        html += '<div class="daily-report-header">';
+        html += `<h3>${t('dailyRiskSummary')}</h3>`;
+        const sColor = dr.summary.riskLevel === 'Bajo' ? '#22c55e' : dr.summary.riskLevel === 'Moderado' ? '#60a5fa' : dr.summary.riskLevel === 'Alto' ? '#f59e0b' : '#ef4444';
+        html += `<div class="summary-grid">`;
+        html += `<div class="summary-card"><span class="summary-label">${t('overallRisk')}</span><span class="summary-value" style="color:${sColor}">${dr.summary.overallRisk}%</span><span class="summary-sub">${dr.summary.riskLevel}</span></div>`;
+        html += `<div class="summary-card"><span class="summary-label">${t('transitDaysCount')}</span><span class="summary-value">${dr.dailyReport.length}</span></div>`;
+        html += `<div class="summary-card"><span class="summary-label">${t('peakDays')}</span><span class="summary-value">${dr.summary.peakDays.length}</span></div>`;
+        html += `</div>`;
+        html += `<p class="summary-desc">${dr.summary.description}</p>`;
+        html += '</div>';
+
+        html += '<h3>' + t('dayCalendar') + '</h3>';
+        html += '<div class="transit-calendar">';
+        dr.dailyReport.forEach(day => {
+            const rl = getDayRiskLevel(day.totalRisk);
+            html += `<div class="cal-day" style="border-left:4px solid ${rl.color}" title="Día ${day.dayNum}: ${day.totalRisk}%">`;
+            html += `<span class="cal-day-num">${day.dayNum}</span>`;
+            html += `<span class="cal-day-risk" style="color:${rl.color}">${day.totalRisk}%</span>`;
+            if (day.aspects.length > 0) {
+                html += `<span class="cal-day-aspects">${day.aspects.length}</span>`;
+            }
+            html += '</div>';
+        });
+        html += '</div>';
+
+        if (dr.summary.peakDays.length > 0) {
+            html += `<h3>${t('peakDays')}</h3>`;
+            html += '<div class="peak-days-list">';
+            dr.summary.peakDays.forEach(pd => {
+                html += `<div class="peak-day-item"><strong>Día ${pd.dayNum}:</strong> ${pd.reason} <span class="badge badge-red">${pd.risk}%</span></div>`;
+            });
+            html += '</div>';
+        }
+
+        html += '<h3>' + t('transitCalendar') + '</h3>';
+        dr.dailyReport.forEach(day => {
+            if (day.aspects.length === 0 && day.signChanges.length === 0 && day.stations.length === 0) return;
+            const rl = getDayRiskLevel(day.totalRisk);
+            html += `<div class="day-detail-card" style="border-left:4px solid ${rl.color}">`;
+            html += `<div class="day-detail-header"><strong>Día ${day.dayNum}</strong> — ${day.date} <span class="badge" style="background:${rl.color};color:#fff">${rl.label} ${day.totalRisk}%</span></div>`;
+
+            day.planetPositions.forEach(pp => {
+                if (pp.isRetrograde) {
+                    html += `<div class="retrograde-note">℞ ${pp.name} en ${pp.signSymbol} ${pp.sign}</div>`;
+                }
+            });
+
+            day.aspects.forEach(a => {
+                const aColor = a.intensity === 'pico' ? '#ef4444' : a.intensity === 'fuerte' ? '#f59e0b' : a.intensity === 'moderado' ? '#60a5fa' : '#22c55e';
+                html += `<div class="aspect-card">`;
+                html += `<div class="aspect-header"><strong>${a.transitSymbol} ${a.transitPlanet} ${a.symbol} ${a.natalSymbol} ${a.natalPlanet}</strong> <span class="badge" style="background:${aColor};color:#fff">${a.intensity}</span> <span class="aspect-orb">orbe ${a.orb.toFixed(1)}°</span></div>`;
+                html += `<div class="aspect-risk-bars">`;
+                html += `<div class="risk-bar-item"><span>${t('behavioralRisk')}</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.min(a.riskArea.behavioral, 100)}%;background:${a.riskArea.behavioral > 60 ? '#ef4444' : a.riskArea.behavioral > 30 ? '#f59e0b' : '#22c55e'}"></div></div><span>${a.riskArea.behavioral}%</span></div>`;
+                html += `<div class="risk-bar-item"><span>${t('socialRisk')}</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.min(a.riskArea.social, 100)}%;background:${a.riskArea.social > 60 ? '#ef4444' : a.riskArea.social > 30 ? '#f59e0b' : '#22c55e'}"></div></div><span>${a.riskArea.social}%</span></div>`;
+                html += `</div>`;
+                html += `<p><strong>Comportamiento:</strong> ${a.behavioral}</p>`;
+                html += `<p><strong>Interacción social:</strong> ${a.social}</p>`;
+                html += `<p><strong>🌿 Dieta:</strong> ${a.diet}</p>`;
+                html += `<p><strong>🏃 Ejercicio:</strong> ${a.exercise}</p>`;
+                html += `<p><strong>🛡️ Mitigación:</strong> ${a.mitigation}</p>`;
+                html += `<p class="credibility-text"><strong>📊 Credibilidad:</strong> ${a.credibility}</p>`;
+                html += `<blockquote class="transit-quote">"${a.quote.text}"<cite>— ${a.quote.author}</cite></blockquote>`;
+                html += `<p class="alchemy-text"><strong>⚗️ Alquimia:</strong> ${a.alchemy}</p>`;
+                html += `<div class="decree-box"><strong>📜 Decreto:</strong> <em>"${a.decree}"</em></div>`;
+                html += `<div class="ritual-box">`;
+                html += `<strong>🔮 Ritual:</strong>`;
+                html += `<p><strong>Piedras:</strong> ${a.ritual.stones.join(', ')}</p>`;
+                html += `<p><strong>Horas propicias:</strong> ${a.ritual.hours}</p>`;
+                html += `<p>${a.ritual.instructions}</p>`;
+                html += `</div>`;
+                html += '</div>';
+            });
+            html += '</div>';
+        });
+
+        if (dr.weeklyForecast && dr.weeklyForecast.length > 0) {
+            html += '<h3>' + t('weeklyForecast') + '</h3>';
+            dr.weeklyForecast.forEach(wf => {
+                html += `<div class="weekly-card">`;
+                html += `<strong>${t('weekLabel')} ${wf.week}</strong> (Días ${wf.startDay}-${wf.endDay}) — Riesgo promedio: ${wf.avgRisk}%`;
+                html += `<p>${t('dominantPlanet')}: ${wf.dominantPlanet} | ${wf.summary}</p>`;
+                html += `</div>`;
+            });
+        }
+
+        if (dr.rituals && dr.rituals.bestDays && dr.rituals.bestDays.length > 0) {
+            html += '<h3>' + t('bestRitualDays') + '</h3>';
+            html += '<div class="ritual-days-grid">';
+            dr.rituals.bestDays.forEach(rd => {
+                html += `<div class="ritual-day-card">`;
+                html += `<strong>Día ${rd.dayNum}</strong> — ${rd.planet}`;
+                html += `<p>🪨 ${rd.stone}</p>`;
+                html += `<p>🕐 ${rd.hour}</p>`;
+                html += `<p>${rd.instructions}</p>`;
+                html += `</div>`;
+            });
+            html += '</div>';
+        }
+    }
+
     html += '<h3>' + t('transitInterp') + '</h3>';
     if (lastTransitAnalysis.transitHealthImpact.length === 0) {
         html += '<p>' + t('noTransits') + '</p>';

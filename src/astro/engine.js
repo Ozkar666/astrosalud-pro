@@ -423,6 +423,128 @@ export class NatalChart {
 
         return periods;
     }
+
+    calculateTransitsForMonth(natalChart, startYear, startMonth, startDay, latitude, longitude, tzOffset) {
+        const days = [];
+        const flags = this.useSwissEphemeris
+            ? CalculationFlag.SwissEphemeris | CalculationFlag.Speed
+            : CalculationFlag.MoshierEphemeris | CalculationFlag.Speed;
+
+        let prevPositions = null;
+
+        for (let d = 0; d < 30; d++) {
+            const jd = this.swe.julianDay(startYear, startMonth, startDay + d, 12);
+            const transitPlanets = [];
+
+            for (let i = 0; i < PLANET_INFO.length; i++) {
+                const info = PLANET_INFO[i];
+                const pos = this.swe.calculatePosition(jd, info.planet, flags);
+                const signData = this._getSign(pos.longitude);
+                const dms = this._decimalToDMS(pos.longitude % 30);
+
+                transitPlanets.push({
+                    index: i,
+                    name: info.name,
+                    symbol: info.symbol,
+                    longitude: pos.longitude,
+                    latitude: pos.latitude,
+                    distance: pos.distance,
+                    speed: pos.longitudeSpeed,
+                    isRetrograde: pos.longitudeSpeed < 0,
+                    sign: signData.name,
+                    signSymbol: signData.symbol,
+                    signIndex: signData.index,
+                    degree: dms.degrees,
+                    minute: dms.minutes,
+                    second: dms.seconds,
+                    element: signData.element,
+                    modality: signData.modality
+                });
+            }
+
+            const dayAspects = [];
+            for (const tp of transitPlanets) {
+                for (let j = 0; j < natalChart.planets.length; j++) {
+                    let diff = tp.longitude - natalChart.planets[j].longitude;
+                    while (diff > 180) diff -= 360;
+                    while (diff < -180) diff += 360;
+                    const absDiff = Math.abs(diff);
+
+                    for (const t of ASPECT_TYPES) {
+                        if (t.nature === 'menor') continue;
+                        const orb = absDiff - t.angle;
+                        if (Math.abs(orb) <= t.orb) {
+                            dayAspects.push({
+                                transitPlanet: tp.name,
+                                transitSymbol: tp.symbol,
+                                natalPlanet: natalChart.planets[j].name,
+                                natalSymbol: natalChart.planets[j].symbol,
+                                type: t.name,
+                                symbol: t.symbol,
+                                angle: absDiff,
+                                exactAngle: t.angle,
+                                orb: Math.abs(orb),
+                                nature: t.nature,
+                                isExact: Math.abs(orb) < 0.5,
+                                isNearExact: Math.abs(orb) < 2
+                            });
+                            break;
+                        }
+                    }
+                }
+            }
+
+            dayAspects.sort((a, b) => a.orb - b.orb);
+
+            const signChanges = [];
+            const stations = [];
+
+            if (prevPositions) {
+                for (let i = 0; i < transitPlanets.length; i++) {
+                    const curr = transitPlanets[i];
+                    const prev = prevPositions[i];
+
+                    if (curr.signIndex !== prev.signIndex) {
+                        signChanges.push({
+                            planet: curr.name,
+                            symbol: curr.symbol,
+                            fromSign: prev.sign,
+                            toSign: curr.sign,
+                            longitude: curr.longitude
+                        });
+                    }
+
+                    const speedDelta = curr.speed - prev.speed;
+                    if ((prev.speed > 0 && curr.speed < 0 && Math.abs(curr.speed) < 0.5) ||
+                        (prev.speed < 0 && curr.speed > 0 && Math.abs(curr.speed) < 0.5) ||
+                        (Math.abs(speedDelta) > 0 && prev.speed * curr.speed < 0 && Math.abs(curr.speed) < 0.5)) {
+                        stations.push({
+                            planet: curr.name,
+                            symbol: curr.symbol,
+                            type: curr.speed < 0 ? 'retrograde' : 'direct',
+                            longitude: curr.longitude,
+                            speed: curr.speed
+                        });
+                    }
+                }
+            }
+
+            const dateObj = new Date(startYear, startMonth - 1, startDay + d);
+
+            days.push({
+                date: dateObj.toISOString().split('T')[0],
+                dayNum: d + 1,
+                planets: transitPlanets,
+                aspects: dayAspects,
+                signChanges: signChanges,
+                stations: stations
+            });
+
+            prevPositions = transitPlanets.map(p => ({ ...p }));
+        }
+
+        return days;
+    }
 }
 
 export { PLANET_INFO, SIGNS, HOUSE_SYSTEMS, ASPECT_TYPES };
