@@ -8,6 +8,7 @@ import { generateChartSVG } from './astro/chart-renderer.js';
 import { searchCities, estimateTimezoneOffset } from './utils/geocoder.js';
 import { analyzeHealthTendencies, analyzeTransits, setAnalysisLanguage, getTranslatedPracticalAdvice, translatePlanet, translateSign } from './health/analysis.js';
 import { analyzeDailyTransits, getDayRiskLevel } from './transit/daily-transit-analyzer.js';
+import { analyzeRitual } from './ritual/ritual-analyzer.js';
 import { STRINGS } from './i18n/translations.js';
 import { initSentry, captureError } from './utils/sentry.js';
 
@@ -1200,6 +1201,125 @@ function showFullTransitReport() {
                 html += `<p><strong>${t('hoursLabel')}</strong> ${a.ritual.hours}</p>`;
                 html += `<p>${a.ritual.instructions}</p>`;
                 html += `</div>`;
+
+                const ritualData = analyzeRitual(
+                    a.transitPlanet, a.natalPlanet, a.type, a.orb,
+                    (a.riskArea.behavioral + a.riskArea.social) / 2,
+                    a.date, day.planetPositions
+                );
+
+                if (ritualData.hasRitual) {
+                    const ritualId = `ritual-${day.dayNum}-${a.transitPlanet}-${a.natalPlanet}`.replace(/\s/g, '-');
+                    html += `<div class="master-order-panel">`;
+                    html += `<button class="master-order-toggle" onclick="const el=document.getElementById('${ritualId}');el.style.display=el.style.display==='none'?'block':'none';this.textContent=el.style.display==='none'?'${t('masterOrderShow')}':'${t('masterOrderHide')}'">`;
+                    html += `📜 ${t('masterOrderTitle')} — ${a.transitPlanet} ${a.symbol} ${a.natalPlanet}`;
+                    html += `</button>`;
+                    html += `<div id="${ritualId}" class="master-order-content" style="display:none">`;
+
+                    html += `<div class="mo-section mo-synthesis"><h4>📋 ${t('moSynthesis')}</h4><p>${ritualData.synthesis}</p></div>`;
+
+                    html += `<div class="mo-section mo-force"><h4>🌟 ${t('moPlanetaryForce')}</h4>`;
+                    html += `<p><strong>${t('moPrimary')}:</strong> ${ritualData.planetaryForce.primary} (${ritualData.planetaryForce.primarySphere})</p>`;
+                    html += `<p><strong>${t('moSecondary')}:</strong> ${ritualData.planetaryForce.secondary} (${ritualData.planetaryForce.secondarySphere})</p>`;
+                    html += `<p><strong>${t('moArchetype')}:</strong> ${ritualData.planetaryForce.archetype.positive}</p>`;
+                    html += `<p><strong>${t('moVirtues')}:</strong> ${ritualData.planetaryForce.virtues.join(', ')}</p>`;
+                    html += `</div>`;
+
+                    html += `<div class="mo-section mo-area"><h4>🎯 ${t('moActivatedArea')}</h4>`;
+                    html += `<p><strong>${ritualData.activatedArea.planet}:</strong> ${ritualData.activatedArea.function}</p>`;
+                    html += `<p><strong>${t('moBodyParts')}:</strong> ${ritualData.activatedArea.bodyParts.join(', ')}</p>`;
+                    html += `</div>`;
+
+                    html += `<div class="mo-section mo-aspect"><h4>⚡ ${t('moAspectNature')}</h4>`;
+                    html += `<p><strong>${ritualData.aspectNature.type}:</strong> ${ritualData.aspectNature.description}</p>`;
+                    html += `<p><strong>${t('moFocus')}:</strong> ${ritualData.aspectNature.focus}</p>`;
+                    html += `<p><strong>${t('moPhase')}:</strong> ${ritualData.aspectNature.phases}</p>`;
+                    html += `</div>`;
+
+                    html += `<div class="mo-section mo-objectives"><h4>🧭 ${t('moObjectives')}</h4>`;
+                    html += `<p><strong>${t('moEvolutionary')}:</strong> ${ritualData.evolutionaryObjective}</p>`;
+                    html += `<p><strong>${t('moRitual')}:</strong> ${ritualData.ritualObjective}</p>`;
+                    html += `<p><strong>${t('moOperationType')}:</strong> ${ritualData.operationType}</p>`;
+                    html += `</div>`;
+
+                    html += `<div class="mo-section mo-timing"><h4>⏰ ${t('moTiming')}</h4>`;
+                    html += `<p><strong>${t('moPrincipal')}:</strong> ${ritualData.timing.principal.date}, ${ritualData.timing.principal.hourStart}-${ritualData.timing.principal.hourEnd}</p>`;
+                    html += `<p><strong>${t('moDayPlanet')}:</strong> ${ritualData.timing.principal.dayPlanet}</p>`;
+                    html += `<p><strong>${t('moHourPlanet')}:</strong> ${ritualData.timing.principal.hourPlanet}</p>`;
+                    html += `<p><strong>${t('moFavorability')}:</strong> ${ritualData.timing.principal.score}/100</p>`;
+                    if (ritualData.timing.alternativa) {
+                        html += `<p><strong>${t('moAlternative')}:</strong> ${ritualData.timing.alternativa.date}, ${ritualData.timing.alternativa.hourStart}-${ritualData.timing.alternativa.hourEnd} (${ritualData.timing.alternativa.score}/100)</p>`;
+                    }
+                    html += `</div>`;
+
+                    html += `<div class="mo-section mo-sphere"><h4>🪐 ${t('moSphere')}</h4>`;
+                    html += `<p>${ritualData.sphere.explanation}</p>`;
+                    html += `</div>`;
+
+                    html += `<div class="mo-section mo-correspondences"><h4>🔗 ${t('moCorrespondences')}</h4>`;
+                    html += `<p><strong>${t('moColor')}:</strong> ${ritualData.correspondences.color}</p>`;
+                    html += `<p><strong>${t('moMetal')}:</strong> ${ritualData.correspondences.metal}</p>`;
+                    html += `<p><strong>${t('moStones')}:</strong> ${ritualData.correspondences.stone.join(', ')}</p>`;
+                    html += `<p><strong>${t('moIncense')}:</strong> ${ritualData.correspondences.incienso.join(', ')}</p>`;
+                    html += `<p><strong>${t('moPlant')}:</strong> ${ritualData.correspondences.plant.join(', ')}</p>`;
+                    html += `<p><strong>${t('moNumber')}:</strong> ${ritualData.correspondences.number}</p>`;
+                    html += `<p><strong>${t('moGeometry')}:</strong> ${ritualData.correspondences.geometry}</p>`;
+                    html += `<p><strong>${t('moIntelligence')}:</strong> ${ritualData.correspondences.intelligence}</p>`;
+                    html += `<p><strong>${t('moSpirit')}:</strong> ${ritualData.correspondences.spirit}</p>`;
+                    html += `</div>`;
+
+                    html += `<div class="mo-section mo-ritual"><h4>🕯️ ${t('moRitual')}</h4>`;
+                    if (ritualData.ritual) {
+                        html += `<p><strong>I. ${t('moPreparation')}:</strong> ${ritualData.ritual.preparacion}</p>`;
+                        html += `<p><strong>II. ${t('moPurification')}:</strong> ${ritualData.ritual.purificacion}</p>`;
+                        html += `<p><strong>III. ${t('moCentering')}:</strong> ${ritualData.ritual.centramiento}</p>`;
+                        html += `<p><strong>IV. ${t('moOpening')}:</strong> ${ritualData.ritual.apertura}</p>`;
+                        html += `<p><strong>V. ${t('moInvocation')}:</strong> ${ritualData.ritual.invocacion}</p>`;
+                        html += `<p><strong>VI. ${t('moIntention')}:</strong> ${ritualData.ritual.declaracion}</p>`;
+                        html += `<p><strong>VII. ${t('moMainWork')}:</strong> ${ritualData.ritual.trabajo}</p>`;
+                        html += `<p><strong>VIII. ${t('moContemplation')}:</strong> ${ritualData.ritual.contemplacion}</p>`;
+                        html += `<p><strong>IX. ${t('moGratitude')}:</strong> ${ritualData.ritual.agradecimiento}</p>`;
+                        html += `<p><strong>X. ${t('moClosing')}:</strong> ${ritualData.ritual.cierre}</p>`;
+                        html += `<p><strong>XI. ${t('moIntegration')}:</strong> ${ritualData.ritual.integracion}</p>`;
+                    }
+                    html += `</div>`;
+
+                    if (ritualData.talisman) {
+                        html += `<div class="mo-section mo-talisman"><h4>💎 ${t('moTalisman')}</h4>`;
+                        html += `<p><strong>${t('moName')}:</strong> ${ritualData.talisman.name}</p>`;
+                        html += `<p><strong>${t('moPurpose')}:</strong> ${ritualData.talisman.purpose}</p>`;
+                        html += `<p><strong>${t('moInscription')}:</strong> ${ritualData.talisman.inscription}</p>`;
+                        html += `<p><strong>${t('moConsecration')}:</strong> ${ritualData.talisman.consecration}</p>`;
+                        html += `<p><strong>${t('moProcedure')}:</strong></p><pre>${ritualData.talisman.procedure}</pre>`;
+                        html += `<p><strong>${t('moConservation')}:</strong> ${ritualData.talisman.conservation}</p>`;
+                        html += `</div>`;
+                    }
+
+                    html += `<div class="mo-section mo-mantra"><h4>🕉️ ${t('moMantra')}</h4><blockquote>"${ritualData.mantra}"</blockquote></div>`;
+
+                    html += `<div class="mo-section mo-visualization"><h4>👁️ ${t('moVisualization')}</h4><p>${ritualData.visualization}</p></div>`;
+
+                    html += `<div class="mo-section mo-results"><h4>✅ ${t('moExpectedResults')}</h4>`;
+                    html += `<p><strong>${t('moPsychic')}:</strong> ${ritualData.expectedResults.psiquicos.join(', ')}</p>`;
+                    html += `<p><strong>${t('moEmotional')}:</strong> ${ritualData.expectedResults.emocionales.join(', ')}</p>`;
+                    html += `<p><strong>${t('moBehavioral')}:</strong> ${ritualData.expectedResults.conductuales.join(', ')}</p>`;
+                    html += `<p><strong>${t('moSpiritual')}:</strong> ${ritualData.expectedResults.espirituales.join(', ')}</p>`;
+                    html += `</div>`;
+
+                    html += `<div class="mo-section mo-duration"><h4>📅 ${t('moDuration')}</h4><p>${ritualData.duration}</p></div>`;
+
+                    html += `<div class="mo-section mo-precautions"><h4>⚠️ ${t('moPrecautions')}</h4><ul>`;
+                    ritualData.precautions.forEach(p => { html += `<li>${p}</li>`; });
+                    html += `</ul></div>`;
+
+                    html += `<div class="mo-section mo-conclusion"><h4>📝 ${t('moConclusion')}</h4><p>${ritualData.conclusion}</p></div>`;
+
+                    html += `<div class="mo-power-bar"><strong>${t('moRitualPower')}:</strong> <div class="mo-power-fill" style="width:${ritualData.power}%;background:${ritualData.power >= 70 ? '#22c55e' : ritualData.power >= 40 ? '#f59e0b' : '#ef4444'}"></div><span>${ritualData.power}/100</span></div>`;
+
+                    html += `</div>`;
+                    html += `</div>`;
+                }
+
                 html += '</div>';
             });
             html += '</div>';

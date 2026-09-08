@@ -1544,6 +1544,37 @@ footer {
 .weekly-card { background: rgba(255,255,255,0.03); border-radius: 10px; padding: 1rem; margin: 0.5rem 0; border-left: 3px solid #60a5fa; }
 .ritual-days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
 .ritual-day-card { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.2); border-radius: 10px; padding: 1rem; }
+
+.master-order-panel { margin-top: 1.5rem; border: 1px solid rgba(139,92,246,0.3); border-radius: 12px; overflow: hidden; }
+.master-order-toggle { width: 100%; background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(99,102,241,0.15)); border: none; color: #c4b5fd; padding: 1rem 1.2rem; font-size: 0.95rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s; }
+.master-order-toggle:hover { background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(99,102,241,0.25)); }
+.master-order-content { padding: 1.2rem; background: rgba(15,15,35,0.6); }
+.mo-section { margin-bottom: 1.2rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 8px; border-left: 3px solid rgba(139,92,246,0.4); }
+.mo-section h4 { color: #c4b5fd; margin: 0 0 0.6rem 0; font-size: 0.95rem; }
+.mo-section p { margin: 0.3rem 0; font-size: 0.88rem; color: #d1d5db; }
+.mo-section ul { margin: 0.3rem 0; padding-left: 1.2rem; }
+.mo-section li { font-size: 0.85rem; color: #fbbf24; margin-bottom: 0.3rem; }
+.mo-section blockquote { background: rgba(139,92,246,0.08); padding: 0.8rem; border-radius: 8px; border-left: 3px solid #8b5cf6; font-style: italic; color: #e2e8f0; margin: 0.5rem 0; }
+.mo-section pre { background: rgba(0,0,0,0.3); padding: 0.6rem; border-radius: 6px; font-size: 0.8rem; color: #d1d5db; overflow-x: auto; white-space: pre-wrap; }
+.mo-synthesis { border-left-color: #60a5fa; }
+.mo-force { border-left-color: #f59e0b; }
+.mo-area { border-left-color: #22c55e; }
+.mo-aspect { border-left-color: #ef4444; }
+.mo-objectives { border-left-color: #8b5cf6; }
+.mo-timing { border-left-color: #06b6d4; }
+.mo-sphere { border-left-color: #a78bfa; }
+.mo-correspondences { border-left-color: #f472b6; }
+.mo-ritual { border-left-color: #fbbf24; }
+.mo-talisman { border-left-color: #34d399; }
+.mo-mantra { border-left-color: #c084fc; }
+.mo-visualization { border-left-color: #818cf8; }
+.mo-results { border-left-color: #2dd4bf; }
+.mo-duration { border-left-color: #fb923c; }
+.mo-precautions { border-left-color: #f87171; }
+.mo-conclusion { border-left-color: #60a5fa; }
+.mo-power-bar { display: flex; align-items: center; gap: 0.8rem; margin-top: 1rem; padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 8px; }
+.mo-power-bar span { color: #9ca3af; font-size: 0.85rem; min-width: 50px; }
+.mo-power-fill { height: 8px; border-radius: 4px; background: #22c55e; transition: width 0.3s; }
 @media (max-width: 640px) {
     .summary-grid { grid-template-columns: 1fr 1fr; }
     .transit-calendar { grid-template-columns: repeat(7, 1fr); }
