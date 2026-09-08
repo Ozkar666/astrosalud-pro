@@ -1508,7 +1508,15 @@ function processPayment() {
     btn.disabled = true;
 
     // Parse expiry
-    const [expMonth, expYear] = cardExpiry.split('/');
+    const parts = cardExpiry.split('/');
+    if (parts.length !== 2 || !parts[0] || !parts[1]) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert(t('fillRequired'));
+        return;
+    }
+    const expMonth = parts[0];
+    const expYear = parts[1];
 
     // Check if Mercado Pago SDK is loaded
     if (!window.MercadoPago) {
