@@ -51,7 +51,6 @@ function calculateCriticalWindow(transitPlanet, orb, aspectType, dayDate) {
     endDate: formatTime(endDate),
     daysToEnd,
     peakDay,
-    durationText,
     intensity: mod.intensity || 'media'
   };
 }

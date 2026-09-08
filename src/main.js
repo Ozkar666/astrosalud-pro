@@ -1129,7 +1129,7 @@ function showFullTransitReport() {
         html += '<div class="transit-calendar">';
         dr.dailyReport.forEach(day => {
             const rl = getDayRiskLevel(day.totalRisk);
-            html += `<div class="cal-day" style="border-left:4px solid ${rl.color}" title="Día ${day.dayNum}: ${day.totalRisk}%">`;
+            html += `<div class="cal-day" style="border-left:4px solid ${rl.color}" title="${t('dayLabel')} ${day.dayNum}: ${day.totalRisk}%">`;
             html += `<span class="cal-day-num">${day.dayNum}</span>`;
             html += `<span class="cal-day-risk" style="color:${rl.color}">${day.totalRisk}%</span>`;
             if (day.aspects.length > 0) {
@@ -1143,7 +1143,7 @@ function showFullTransitReport() {
             html += `<h3>${t('peakDays')}</h3>`;
             html += '<div class="peak-days-list">';
             dr.summary.peakDays.forEach(pd => {
-                html += `<div class="peak-day-item"><strong>Día ${pd.dayNum}:</strong> ${pd.reason} <span class="badge badge-red">${pd.risk}%</span></div>`;
+                html += `<div class="peak-day-item"><strong>${t('dayLabel')} ${pd.dayNum}:</strong> ${pd.reason} <span class="badge badge-red">${pd.risk}%</span></div>`;
             });
             html += '</div>';
         }
@@ -1153,11 +1153,11 @@ function showFullTransitReport() {
             if (day.aspects.length === 0 && day.signChanges.length === 0 && day.stations.length === 0) return;
             const rl = getDayRiskLevel(day.totalRisk);
             html += `<div class="day-detail-card" style="border-left:4px solid ${rl.color}">`;
-            html += `<div class="day-detail-header"><strong>Día ${day.dayNum}</strong> — ${day.date} <span class="badge" style="background:${rl.color};color:#fff">${rl.label} ${day.totalRisk}%</span></div>`;
+            html += `<div class="day-detail-header"><strong>${t('dayLabel')} ${day.dayNum}</strong> — ${day.date} <span class="badge" style="background:${rl.color};color:#fff">${rl.label} ${day.totalRisk}%</span></div>`;
 
             day.planetPositions.forEach(pp => {
                 if (pp.isRetrograde) {
-                    html += `<div class="retrograde-note">℞ ${pp.name} en ${pp.signSymbol} ${pp.sign}</div>`;
+                    html += `<div class="retrograde-note">℞ ${pp.name} en ${pp.signSymbol} ${pp.sign} — ${t('retrogradeLabel')}</div>`;
                 }
             });
 
@@ -1167,24 +1167,37 @@ function showFullTransitReport() {
                 const transitPosText = transitPos ? `${transitPos.signSymbol} ${transitPos.sign} ${transitPos.degree}°${String(transitPos.minute).padStart(2,'0')}'` : '';
                 html += `<div class="aspect-card">`;
                 html += `<div class="aspect-header"><strong>${a.transitSymbol} ${a.transitPlanet} ${a.symbol} ${a.natalSymbol} ${a.natalPlanet}</strong> <span class="badge" style="background:${aColor};color:#fff">${a.intensity}</span> <span class="aspect-orb">orbe ${a.orb.toFixed(1)}°</span></div>`;
-                html += `<div class="aspect-date-info">📅 <strong>${a.date}</strong>${transitPosText ? ` — ${a.transitSymbol} ${a.transitPlanet} en ${transitPosText}` : ''}</div>`;
+                html += `<div class="aspect-date-info">📅 <strong>${a.date}</strong>${transitPosText ? ` — ${a.transitSymbol} ${a.transitPlanet} ${transitPosText}` : ''}</div>`;
                 html += `<div class="aspect-risk-bars">`;
                 html += `<div class="risk-bar-item"><span>${t('behavioralRisk')}</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.min(a.riskArea.behavioral, 100)}%;background:${a.riskArea.behavioral > 60 ? '#ef4444' : a.riskArea.behavioral > 30 ? '#f59e0b' : '#22c55e'}"></div></div><span>${a.riskArea.behavioral}%</span></div>`;
                 html += `<div class="risk-bar-item"><span>${t('socialRisk')}</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.min(a.riskArea.social, 100)}%;background:${a.riskArea.social > 60 ? '#ef4444' : a.riskArea.social > 30 ? '#f59e0b' : '#22c55e'}"></div></div><span>${a.riskArea.social}%</span></div>`;
                 html += `</div>`;
-                html += `<p><strong>Comportamiento:</strong> ${a.behavioral}</p>`;
-                html += `<p><strong>Interacción social:</strong> ${a.social}</p>`;
-                html += `<p><strong>🌿 Dieta:</strong> ${a.diet}</p>`;
-                html += `<p><strong>🏃 Ejercicio:</strong> ${a.exercise}</p>`;
-                html += `<p><strong>🛡️ Mitigación:</strong> ${a.mitigation}</p>`;
-                html += `<p class="credibility-text"><strong>⏰ Hora Crítica:</strong> Pico el <strong>${a.criticalWindow.peakDate}</strong> — ${a.criticalWindow.durationText} — termina el <strong>${a.criticalWindow.endDate}</strong></p>`;
+                html += `<p><strong>${t('behavioralLabel')}</strong> ${a.behavioral}</p>`;
+                html += `<p><strong>${t('socialLabel')}</strong> ${a.social}</p>`;
+                html += `<p><strong>🌿 ${t('dietLabel')}</strong> ${a.diet}</p>`;
+                html += `<p><strong>🏃 ${t('exerciseLabel')}</strong> ${a.exercise}</p>`;
+                html += `<p><strong>🛡️ ${t('mitigationLabel')}</strong> ${a.mitigation}</p>`;
+                const cw = a.criticalWindow;
+                let durationText;
+                if (cw.daysToEnd <= 1) {
+                    durationText = t('durationLessThanDay');
+                } else if (cw.daysToEnd < 7) {
+                    durationText = t('durationDays').replace('${days}', cw.daysToEnd);
+                } else if (cw.daysToEnd < 30) {
+                    const weeks = Math.round(cw.daysToEnd / 7 * 10) / 10;
+                    durationText = t('durationWeeks').replace('${weeks}', weeks);
+                } else {
+                    const months = Math.round(cw.daysToEnd / 30 * 10) / 10;
+                    durationText = t('durationMonths').replace('${months}', months);
+                }
+                html += `<p class="credibility-text"><strong>⏰ ${t('criticalWindowTitle')}</strong> ${t('peakOn')} <strong>${cw.peakDate}</strong> — ${durationText} — ${t('endsOn')} <strong>${cw.endDate}</strong></p>`;
                 html += `<blockquote class="transit-quote">"${a.quote.text}"<cite>— ${a.quote.author}</cite></blockquote>`;
-                html += `<p class="alchemy-text"><strong>⚗️ Alquimia:</strong> ${a.alchemy}</p>`;
-                html += `<div class="decree-box"><strong>📜 Decreto:</strong> <em>"${a.decree}"</em></div>`;
+                html += `<p class="alchemy-text"><strong>⚗️ ${t('alchemyLabel')}</strong> ${a.alchemy}</p>`;
+                html += `<div class="decree-box"><strong>📜 ${t('decreeLabel')}</strong> <em>"${a.decree}"</em></div>`;
                 html += `<div class="ritual-box">`;
-                html += `<strong>🔮 Ritual:</strong>`;
-                html += `<p><strong>Piedras:</strong> ${a.ritual.stones.join(', ')}</p>`;
-                html += `<p><strong>Horas propicias:</strong> ${a.ritual.hours}</p>`;
+                html += `<strong>🔮 ${t('ritualLabel')}</strong>`;
+                html += `<p><strong>${t('stonesLabel')}</strong> ${a.ritual.stones.join(', ')}</p>`;
+                html += `<p><strong>${t('hoursLabel')}</strong> ${a.ritual.hours}</p>`;
                 html += `<p>${a.ritual.instructions}</p>`;
                 html += `</div>`;
                 html += '</div>';
@@ -1196,7 +1209,7 @@ function showFullTransitReport() {
             html += '<h3>' + t('weeklyForecast') + '</h3>';
             dr.weeklyForecast.forEach(wf => {
                 html += `<div class="weekly-card">`;
-                html += `<strong>${t('weekLabel')} ${wf.week}</strong> (Días ${wf.startDay}-${wf.endDay}) — Riesgo promedio: ${wf.avgRisk}%`;
+                html += `<strong>${t('weekLabel')} ${wf.week}</strong> (${t('dayLabel')} ${wf.startDay}-${wf.endDay}) — ${t('avgRiskLabel')} ${wf.avgRisk}%`;
                 html += `<p>${t('dominantPlanet')}: ${wf.dominantPlanet} | ${wf.summary}</p>`;
                 html += `</div>`;
             });
@@ -1207,7 +1220,7 @@ function showFullTransitReport() {
             html += '<div class="ritual-days-grid">';
             dr.rituals.bestDays.forEach(rd => {
                 html += `<div class="ritual-day-card">`;
-                html += `<strong>Día ${rd.dayNum}</strong> — ${rd.planet}`;
+                html += `<strong>${t('dayLabel')} ${rd.dayNum}</strong> — ${rd.planet}`;
                 html += `<p>🪨 ${rd.stone}</p>`;
                 html += `<p>🕐 ${rd.hour}</p>`;
                 html += `<p>${rd.instructions}</p>`;
