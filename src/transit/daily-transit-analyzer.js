@@ -1,5 +1,61 @@
 import { DAILY_TRANSIT_DATABASE, ASPECT_MODIFIERS, PLANET_RITUAL_DATA } from './daily-transit-database.js';
 
+const PLANET_DAILY_SPEED = {
+  'Luna': 13.2,
+  'Sol': 1.0,
+  'Mercurio': 1.5,
+  'Venus': 1.2,
+  'Marte': 0.52,
+  'Júpiter': 0.083,
+  'Saturno': 0.034,
+  'Urano': 0.012,
+  'Neptuno': 0.006,
+  'Plutón': 0.004
+};
+
+function calculateCriticalWindow(transitPlanet, orb, aspectType, dayDate) {
+  const speed = PLANET_DAILY_SPEED[transitPlanet] || 1.0;
+  const daysToEnd = Math.ceil(orb / speed);
+  const mod = ASPECT_MODIFIERS[aspectType] || { nature: 'neutral' };
+
+  let peakDay;
+  if (mod.nature === 'armonia' || mod.nature === 'oportunidad') {
+    peakDay = 1;
+  } else {
+    peakDay = Math.max(1, Math.ceil(orb / speed * 0.3));
+  }
+
+  const startDate = new Date(dayDate);
+  const peakDate = new Date(startDate);
+  peakDate.setDate(peakDate.getDate() + peakDay);
+  const endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + daysToEnd);
+
+  const formatTime = (d) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+
+  let durationText;
+  if (daysToEnd <= 1) {
+    durationText = 'dura menos de 1 día';
+  } else if (daysToEnd < 7) {
+    durationText = `dura ~${daysToEnd} días`;
+  } else if (daysToEnd < 30) {
+    const weeks = Math.round(daysToEnd / 7 * 10) / 10;
+    durationText = `dura ~${weeks} semanas`;
+  } else {
+    const months = Math.round(daysToEnd / 30 * 10) / 10;
+    durationText = `dura ~${months} meses`;
+  }
+
+  return {
+    peakDate: formatTime(peakDate),
+    endDate: formatTime(endDate),
+    daysToEnd,
+    peakDay,
+    durationText,
+    intensity: mod.intensity || 'media'
+  };
+}
+
 export function getDayRiskLevel(score) {
   if (score >= 75) return { color: '#DC2626', label: 'Muy Alto', textColor: '#FFFFFF' };
   if (score >= 50) return { color: '#EA580C', label: 'Alto', textColor: '#FFFFFF' };
@@ -66,11 +122,13 @@ function processAspect(aspect, dayDate) {
   const socialDesc = selectDescriptionByRisk(dbEntry.social, riskScore);
 
   const riskArea = {
-    behavioral: riskScore > 60 ? 'alto' : riskScore >= 30 ? 'moderado' : 'bajo',
-    social: riskScore > 60 ? 'alto' : riskScore >= 30 ? 'moderado' : 'bajo',
-    diet: riskScore > 50 ? 'alto' : riskScore >= 20 ? 'moderado' : 'bajo',
-    exercise: riskScore > 50 ? 'alto' : riskScore >= 20 ? 'moderado' : 'bajo'
+    behavioral: riskScore,
+    social: Math.max(0, riskScore - 10 + Math.floor(Math.random() * 20)),
+    diet: Math.max(0, riskScore - 15 + Math.floor(Math.random() * 15)),
+    exercise: Math.max(0, riskScore - 12 + Math.floor(Math.random() * 18))
   };
+
+  const criticalWindow = calculateCriticalWindow(transitPlanet, orb, type, dayDate);
 
   return {
     transitPlanet,
@@ -88,7 +146,7 @@ function processAspect(aspect, dayDate) {
     diet: dbEntry.diet,
     exercise: dbEntry.exercise,
     mitigation: dbEntry.mitigation,
-    credibility: dbEntry.credibility,
+    criticalWindow,
     quote: dbEntry.quote,
     alchemy: dbEntry.alchemy,
     decree: dbEntry.decree,

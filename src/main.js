@@ -1177,7 +1177,7 @@ function showFullTransitReport() {
                 html += `<p><strong>🌿 Dieta:</strong> ${a.diet}</p>`;
                 html += `<p><strong>🏃 Ejercicio:</strong> ${a.exercise}</p>`;
                 html += `<p><strong>🛡️ Mitigación:</strong> ${a.mitigation}</p>`;
-                html += `<p class="credibility-text"><strong>📊 Credibilidad:</strong> ${a.credibility}</p>`;
+                html += `<p class="credibility-text"><strong>⏰ Hora Crítica:</strong> Pico el <strong>${a.criticalWindow.peakDate}</strong> — ${a.criticalWindow.durationText} — termina el <strong>${a.criticalWindow.endDate}</strong></p>`;
                 html += `<blockquote class="transit-quote">"${a.quote.text}"<cite>— ${a.quote.author}</cite></blockquote>`;
                 html += `<p class="alchemy-text"><strong>⚗️ Alquimia:</strong> ${a.alchemy}</p>`;
                 html += `<div class="decree-box"><strong>📜 Decreto:</strong> <em>"${a.decree}"</em></div>`;
