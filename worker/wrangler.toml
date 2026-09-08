@@ -1,0 +1,6 @@
+name = "astrosalud-payments"
+main = "payment.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+# MP_ACCESS_TOKEN will be set via: wrangler secret put MP_ACCESS_TOKEN

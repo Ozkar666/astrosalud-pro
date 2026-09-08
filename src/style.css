@@ -884,6 +884,54 @@ body {
 .transit-item { border-left: 3px solid var(--primary); }
 .transit-orb { font-size: 0.8rem; color: var(--text-secondary); }
 
+.transit-cta {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin: 2rem 0 1rem;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.transit-cta-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.transit-cta h3 {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+}
+
+.transit-cta p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+.btn-cta {
+    background: white;
+    color: #6366f1;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 @media (max-width: 768px) { .two-columns { grid-template-columns: 1fr; } }
 
@@ -1123,6 +1171,247 @@ footer {
 
 .disease-card.has-bio {
     border-left: 4px solid #4caf50;
+}
+
+/* Transit Payment Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.modal-close:hover {
+    background: #f1f5f9;
+}
+
+.modal-step h2 {
+    color: #1e293b;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.modal-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.modal-form label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.35rem;
+}
+
+.modal-form input,
+.modal-form select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.modal-form input:focus,
+.modal-form select:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.modal-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.modal-price-box {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.modal-price-period {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.modal-price-box > span:first-child {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-bottom: 0.25rem;
+}
+
+.btn-modal-next,
+.btn-modal-pay {
+    width: 100%;
+    padding: 0.85rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 0.5rem;
+}
+
+.btn-modal-next {
+    background: #6366f1;
+    color: white;
+}
+
+.btn-modal-next:hover {
+    background: #4f46e5;
+    transform: translateY(-1px);
+}
+
+.btn-modal-pay {
+    background: #22c55e;
+    color: white;
+}
+
+.btn-modal-pay:hover {
+    background: #16a34a;
+    transform: translateY(-1px);
+}
+
+.btn-modal-back {
+    width: 100%;
+    padding: 0.7rem;
+    background: none;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    color: #64748b;
+    transition: border-color 0.2s;
+}
+
+.btn-modal-back:hover {
+    border-color: #6366f1;
+    color: #6366f1;
+}
+
+.modal-secure {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0.75rem 0;
+}
+
+.modal-terms {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+}
+
+.modal-terms label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.modal-terms input[type="checkbox"] {
+    width: auto;
+    margin-top: 0.15rem;
+}
+
+.modal-success-icon {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.modal-success {
+    text-align: center;
+}
+
+.modal-success h2 {
+    color: #22c55e;
+}
+
+.modal-success p {
+    color: #64748b;
+    margin-bottom: 1.5rem;
+}
+
+.btn-modal-close {
+    background: #6366f1;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+    .modal-form .form-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 768px) {

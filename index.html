@@ -61,7 +61,10 @@
     <link rel="stylesheet" href="/src/style.css">
     <script>
       window.SENTRY_DSN = 'https://385c92c8a154f71ea2b2c92ff5924e44@o4512049887969280.ingest.us.sentry.io/4512049901666304';
+      window.MP_PUBLIC_KEY = 'TEST-1752b779-4303-475a-b22b-d11a80e28169';
+      window.PAYMENT_WORKER_URL = 'https://astrosalud-payments.ozzkarth.workers.dev';
     </script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
     <a href="#birthForm" class="skip-nav">Skip to form</a>
@@ -230,5 +233,103 @@
     </footer>
 
     <script type="module" src="/src/main.js"></script>
+
+<!-- Transit Report Payment Modal -->
+<div id="transitModal" class="modal-overlay" style="display:none;">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeTransitModal()">&times;</button>
+    
+    <!-- Step 1: Personal Data -->
+    <div id="modalStep1" class="modal-step">
+      <h2 id="modalFormTitle"></h2>
+      <p id="modalFormSubtitle" class="modal-subtitle"></p>
+      
+      <div class="modal-form">
+        <div class="form-group">
+          <label id="modalLabelName" for="modalName"></label>
+          <input type="text" id="modalName" required>
+        </div>
+        <div class="form-group">
+          <label id="modalLabelEmail" for="modalEmail"></label>
+          <input type="email" id="modalEmail" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label id="modalLabelPhone" for="modalPhone"></label>
+            <input type="tel" id="modalPhone" required>
+          </div>
+          <div class="form-group">
+            <label id="modalLabelCpf" for="modalCpf"></label>
+            <input type="text" id="modalCpf" placeholder="000.000.000-00" maxlength="14">
+          </div>
+        </div>
+        <button class="btn-modal-next" onclick="goToPaymentStep()">
+          <span id="modalNextBtn">Continuar al Pago</span> →
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Payment -->
+    <div id="modalStep2" class="modal-step" style="display:none;">
+      <h2 id="modalFormTitle2"></h2>
+      <div class="modal-price-box">
+        <span id="modalPriceLabel"></span>
+        <span class="modal-price">R$ 49,90</span>
+        <span class="modal-price-period">/mês</span>
+      </div>
+      
+      <div class="modal-form">
+        <div class="form-group">
+          <label id="modalLabelCardNumber" for="modalCardNumber"></label>
+          <input type="text" id="modalCardNumber" placeholder="0000 0000 0000 0000" maxlength="19">
+        </div>
+        <div class="form-group">
+          <label id="modalLabelCardName" for="modalCardName"></label>
+          <input type="text" id="modalCardName">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label id="modalLabelCardExpiry" for="modalCardExpiry"></label>
+            <input type="text" id="modalCardExpiry" placeholder="MM/AA" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label id="modalLabelCardCvv" for="modalCardCvv"></label>
+            <input type="text" id="modalCardCvv" placeholder="000" maxlength="4">
+          </div>
+        </div>
+        <div class="form-group">
+          <label id="modalLabelInstallments" for="modalInstallments"></label>
+          <select id="modalInstallments">
+            <option value="1">1x R$ 49,90 (à vista)</option>
+            <option value="2">2x R$ 24,95</option>
+            <option value="3">3x R$ 16,63</option>
+          </select>
+        </div>
+        <div class="modal-secure">
+          <span>🔒</span> <span id="modalSecureText"></span>
+        </div>
+        <div class="modal-terms">
+          <label>
+            <input type="checkbox" id="modalAcceptTerms">
+            <span id="modalTermsText"></span>
+          </label>
+        </div>
+        <button class="btn-modal-pay" id="btnPay" onclick="processPayment()">
+          <span id="modalPayBtn"></span>
+        </button>
+        <button class="btn-modal-back" onclick="goToDataStep()">← Volver</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div id="modalStep3" class="modal-step" style="display:none;">
+      <div class="modal-success-icon">✅</div>
+      <h2 id="modalSuccessTitle"></h2>
+      <p id="modalSuccessMsg"></p>
+      <button class="btn-modal-close" onclick="closeTransitModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

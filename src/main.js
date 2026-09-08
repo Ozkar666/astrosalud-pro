@@ -1061,6 +1061,15 @@ function renderTransitReport(transitAnalysis, transitData) {
     }
 
     html += '</div>';
+
+    // CTA: Paid full transit report
+    html += '<div class="transit-cta">';
+    html += '<div class="transit-cta-icon">🌟</div>';
+    html += `<h3>${t('transitCtaTitle')}</h3>`;
+    html += `<p>${t('transitCtaDesc')}</p>`;
+    html += `<button class="btn-cta" onclick="openTransitModal()">${t('transitCtaButton')}</button>`;
+    html += '</div>';
+
     html += '<div style="text-align:center;margin-top:1.5rem;"><button class="btn-download btn-pdf" onclick="downloadTransitPDF()">' + t('downloadTransitPDF') + '</button></div>';
     container.innerHTML = html;
     container.style.display = 'block';
@@ -1370,3 +1379,154 @@ window.downloadTransitPDF = function() {
     printWindow.focus();
     setTimeout(() => { printWindow.print(); }, 500);
 };
+
+// ==================== TRANSIT MODAL ====================
+
+function openTransitModal() {
+    const modal = document.getElementById('transitModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    document.getElementById('modalFormTitle').textContent = t('formTitle');
+    document.getElementById('modalFormSubtitle').textContent = t('formSubtitle');
+    document.getElementById('modalLabelName').textContent = t('formName');
+    document.getElementById('modalLabelEmail').textContent = t('formEmail');
+    document.getElementById('modalLabelPhone').textContent = t('formPhone');
+    document.getElementById('modalLabelCpf').textContent = t('formCpf');
+    document.getElementById('modalNextBtn').textContent = '→ ' + t('formSubmit').split(' ')[0];
+
+    document.getElementById('modalFormTitle2').textContent = t('formTitle');
+    document.getElementById('modalLabelCardNumber').textContent = t('formCardNumber');
+    document.getElementById('modalLabelCardName').textContent = t('formCardName');
+    document.getElementById('modalLabelCardExpiry').textContent = t('formCardExpiry');
+    document.getElementById('modalLabelCardCvv').textContent = t('formCardCvv');
+    document.getElementById('modalLabelInstallments').textContent = t('formCardInstallments');
+    document.getElementById('modalPriceLabel').textContent = t('formPrice');
+    document.getElementById('modalSecureText').textContent = t('formSecure');
+    document.getElementById('modalTermsText').textContent = t('formTerms');
+    document.getElementById('modalPayBtn').textContent = t('formSubmit');
+
+    document.getElementById('modalSuccessTitle').textContent = t('formSuccessTitle');
+    document.getElementById('modalSuccessMsg').textContent = t('formSuccessMsg');
+}
+
+function closeTransitModal() {
+    document.getElementById('transitModal').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('modalStep1').style.display = 'block';
+    document.getElementById('modalStep2').style.display = 'none';
+    document.getElementById('modalStep3').style.display = 'none';
+}
+
+function goToPaymentStep() {
+    const name = document.getElementById('modalName').value.trim();
+    const email = document.getElementById('modalEmail').value.trim();
+    const phone = document.getElementById('modalPhone').value.trim();
+
+    if (!name || !email || !phone) {
+        alert(t('fillRequired'));
+        return;
+    }
+
+    document.getElementById('modalStep1').style.display = 'none';
+    document.getElementById('modalStep2').style.display = 'block';
+}
+
+function goToDataStep() {
+    document.getElementById('modalStep2').style.display = 'none';
+    document.getElementById('modalStep1').style.display = 'block';
+}
+
+function processPayment() {
+    const cardNumber = document.getElementById('modalCardNumber').value.trim();
+    const cardName = document.getElementById('modalCardName').value.trim();
+    const cardExpiry = document.getElementById('modalCardExpiry').value.trim();
+    const cardCvv = document.getElementById('modalCardCvv').value.trim();
+    const installments = document.getElementById('modalInstallments').value;
+    const accepted = document.getElementById('modalAcceptTerms').checked;
+
+    const name = document.getElementById('modalName').value.trim();
+    const email = document.getElementById('modalEmail').value.trim();
+    const phone = document.getElementById('modalPhone').value.trim();
+    const cpf = document.getElementById('modalCpf').value.trim();
+
+    if (!cardNumber || !cardName || !cardExpiry || !cardCvv) {
+        alert(t('fillRequired'));
+        return;
+    }
+
+    if (!accepted) {
+        alert(t('acceptTerms'));
+        return;
+    }
+
+    const btn = document.getElementById('btnPay');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span>' + t('formProcessing') + '</span>';
+    btn.disabled = true;
+
+    // Parse expiry
+    const [expMonth, expYear] = cardExpiry.split('/');
+    const expirationMonth = parseInt(expMonth);
+    const expirationYear = parseInt('20' + expYear);
+
+    // Create card token with Mercado Pago SDK
+    const cardData = {
+        cardNumber: cardNumber.replace(/\s/g, ''),
+        cardholderName: cardName,
+        identification: { type: 'CPF', number: cpf.replace(/\D/g, '') },
+        expirationMonth: expirationMonth,
+        expirationYear: expirationYear,
+        securityCode: cardCvv,
+    };
+
+    window.MercadoPago.setPublishableKey(window.MP_PUBLIC_KEY);
+
+    window.MercadoPago.createToken(cardData, (status, response) => {
+        if (status === 200 && response.id) {
+            // Send to backend Worker
+            fetch(window.PAYMENT_WORKER_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    token: response.id,
+                    paymentMethodId: response.payment_method_id,
+                    installments: installments,
+                    amount: '49.90',
+                    email: email,
+                    name: name,
+                    cpf: cpf,
+                    phone: phone,
+                }),
+            })
+            .then(r => r.json())
+            .then(result => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+
+                if (result.status === 'approved' || result.status === 'pending') {
+                    document.getElementById('modalStep2').style.display = 'none';
+                    document.getElementById('modalStep3').style.display = 'block';
+                } else {
+                    alert(t('paymentError') + ': ' + (result.error || result.status_detail));
+                }
+            })
+            .catch(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert(t('paymentError'));
+            });
+        } else {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            const errMsg = response.cause ? response.cause[0].description : t('paymentError');
+            alert(t('cardError') + ': ' + errMsg);
+        }
+    });
+}
+
+window.openTransitModal = openTransitModal;
+window.closeTransitModal = closeTransitModal;
+window.goToPaymentStep = goToPaymentStep;
+window.goToDataStep = goToDataStep;
+window.processPayment = processPayment;
