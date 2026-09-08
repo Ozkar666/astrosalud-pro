@@ -1552,6 +1552,7 @@ function processPayment() {
             identificationNumber: cleanCpf,
         })
         .then(result => {
+            console.log('Card token result:', JSON.stringify(result));
             if (result.id) {
                 return fetch(window.PAYMENT_WORKER_URL, {
                     method: 'POST',
@@ -1576,11 +1577,13 @@ function processPayment() {
             btn.innerHTML = originalText;
             btn.disabled = false;
 
+            console.log('MP Worker response:', JSON.stringify(result));
+
             if (result.status === 'approved' || result.status === 'pending') {
                 closeTransitModal();
                 showFullTransitReport();
             } else {
-                alert(t('paymentError') + ': ' + (result.error || result.status_detail));
+                alert(t('paymentError') + ': ' + (result.error || result.status_detail || JSON.stringify(result)));
             }
         })
         .catch(err => {
