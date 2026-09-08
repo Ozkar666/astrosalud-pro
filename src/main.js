@@ -1523,13 +1523,13 @@ function processPayment() {
 
         const cleanCardNumber = cardNumber.replace(/[\s-]/g, '');
         const cleanCpf = cpf.replace(/\D/g, '');
-        const expirationMonth = parseInt(expMonth);
+        const fullYear = expYear.length === 2 ? '20' + expYear : expYear;
 
         mp.createCardToken({
             cardNumber: cleanCardNumber,
             cardholderName: cardName,
-            cardExpirationMonth: expirationMonth,
-            cardExpirationYear: expYear,
+            cardExpirationMonth: expMonth,
+            cardExpirationYear: fullYear,
             securityCode: cardCvv,
             identificationType: 'CPF',
             identificationNumber: cleanCpf,
