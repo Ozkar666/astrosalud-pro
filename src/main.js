@@ -86,6 +86,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('transitDate').value = today;
 
+    const expiryInput = document.getElementById('modalCardExpiry');
+    if (expiryInput) {
+        expiryInput.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length >= 2) val = val.substring(0, 2) + '/' + val.substring(2, 4);
+            e.target.value = val;
+        });
+    }
+
     setupAutocomplete();
     setupTimezoneSelect();
   } catch (error) {
