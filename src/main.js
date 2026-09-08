@@ -54,6 +54,7 @@ let chartEngine = null;
 let lastChart = null;
 let lastHealth = null;
 let lastTransitAnalysis = null;
+let lastTransitData = null;
 let lastBirthPlace = '';
 let lastMedicalHistory = null;
 let selectedCity = null;
@@ -321,6 +322,7 @@ async function handleTransits() {
         const transitData = chartEngine.calculateTransits(lastChart, tYear, tMonth, tDay, 12, 0, coords.lat, coords.lon, coords.tz);
         const transitAnalysis = analyzeTransits(lastChart, transitData);
         lastTransitAnalysis = transitAnalysis;
+        lastTransitData = transitData;
         renderTransitReport(transitAnalysis, transitData);
     } catch (err) {
         captureError(err, { phase: 'transit-calculation', transitDate });
@@ -1031,6 +1033,55 @@ function renderTransitReport(transitAnalysis, transitData) {
     const vi = transitAnalysis.vulnerabilityIndex;
     let html = '<div class="section-card"><h2>' + t('transitReport') + '</h2>';
 
+    // Vulnerability Index (FREE preview)
+    const viColor = vi.score <= 15 ? '#22c55e' : vi.score <= 40 ? '#60a5fa' : vi.score <= 65 ? '#f59e0b' : '#ef4444';
+    html += '<div class="vulnerability-index">';
+    html += `<h3>${t('vulnIndex')}</h3>`;
+    html += `<div class="vi-score" style="color:${viColor}">${vi.level}</div>`;
+    html += `<div class="vi-bar"><div class="vi-bar-fill" style="width:${vi.score}%;background:${viColor}"></div></div>`;
+    html += `<p class="vi-desc">${vi.description}</p>`;
+    if (vi.factors.length > 0) {
+        html += '<ul class="vi-factors">';
+        vi.factors.forEach(f => { html += `<li><strong>${f.planet} → ${f.target} (${f.aspect}):</strong> ${f.impact}</li>`; });
+        html += '</ul>';
+    }
+    html += '</div>';
+
+    // Transit Interpretations - BLURRED (paid content teaser)
+    const transitCount = transitAnalysis.transitHealthImpact.length;
+    if (transitCount > 0) {
+        html += '<h3>' + t('transitInterp') + '</h3>';
+        html += '<div class="transit-paywall">';
+        html += '<div class="transit-paywall-content">';
+        transitAnalysis.transitHealthImpact.forEach(tr => {
+            const lc = tr.level === 'I' ? 'badge-green' : tr.level === 'II' ? 'badge-yellow' : tr.level === 'III' ? 'badge-red' : 'badge-red';
+            html += `<div class="analysis-item transit-item">`;
+            html += `<div class="sign-header"><strong>${tr.transitSymbol} ${tr.transitPlanet} ${tr.aspectSymbol} ${tr.natalSymbol} ${tr.natalPlanet}</strong><span class="badge ${lc}">${t('level')} ${tr.level}</span></div>`;
+            html += `<p>${tr.interpretation}</p>`;
+            html += `<p class="transit-orb">${t('orbe')} ${tr.orb.toFixed(1)}°</p>`;
+            html += '</div>';
+        });
+        html += '</div>';
+        html += '<div class="transit-paywall-overlay">';
+        html += `<p>${transitCount} ${t('transitInterp').toLowerCase()} ${t('transitCtaDesc').split('.')[0].toLowerCase()}...</p>`;
+        html += `<button class="btn-cta" onclick="openTransitModal()">${t('transitCtaButton')}</button>`;
+        html += '</div>';
+        html += '</div>';
+    } else {
+        html += '<p>' + t('noTransits') + '</p>';
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
+    container.style.display = 'block';
+}
+
+function showFullTransitReport() {
+    if (!lastTransitAnalysis || !lastTransitData) return;
+    const container = document.getElementById('transitResults');
+    const vi = lastTransitAnalysis.vulnerabilityIndex;
+    let html = '<div class="section-card"><h2>' + t('transitReport') + ' <span style="color:#22c55e;font-size:0.8em;">✓ ' + t('formSuccessTitle') + '</span></h2>';
+
     // Vulnerability Index
     const viColor = vi.score <= 15 ? '#22c55e' : vi.score <= 40 ? '#60a5fa' : vi.score <= 65 ? '#f59e0b' : '#ef4444';
     html += '<div class="vulnerability-index">';
@@ -1045,12 +1096,12 @@ function renderTransitReport(transitAnalysis, transitData) {
     }
     html += '</div>';
 
-    // Transit Health Interpretations
+    // FULL Transit Health Interpretations (unlocked after payment)
     html += '<h3>' + t('transitInterp') + '</h3>';
-    if (transitAnalysis.transitHealthImpact.length === 0) {
+    if (lastTransitAnalysis.transitHealthImpact.length === 0) {
         html += '<p>' + t('noTransits') + '</p>';
     } else {
-        transitAnalysis.transitHealthImpact.forEach(tr => {
+        lastTransitAnalysis.transitHealthImpact.forEach(tr => {
             const lc = tr.level === 'I' ? 'badge-green' : tr.level === 'II' ? 'badge-yellow' : tr.level === 'III' ? 'badge-red' : 'badge-red';
             html += `<div class="analysis-item transit-item">`;
             html += `<div class="sign-header"><strong>${tr.transitSymbol} ${tr.transitPlanet} ${tr.aspectSymbol} ${tr.natalSymbol} ${tr.natalPlanet}</strong><span class="badge ${lc}">${t('level')} ${tr.level}</span></div>`;
@@ -1061,15 +1112,6 @@ function renderTransitReport(transitAnalysis, transitData) {
     }
 
     html += '</div>';
-
-    // CTA: Paid full transit report
-    html += '<div class="transit-cta">';
-    html += '<div class="transit-cta-icon">🌟</div>';
-    html += `<h3>${t('transitCtaTitle')}</h3>`;
-    html += `<p>${t('transitCtaDesc')}</p>`;
-    html += `<button class="btn-cta" onclick="openTransitModal()">${t('transitCtaButton')}</button>`;
-    html += '</div>';
-
     html += '<div style="text-align:center;margin-top:1.5rem;"><button class="btn-download btn-pdf" onclick="downloadTransitPDF()">' + t('downloadTransitPDF') + '</button></div>';
     container.innerHTML = html;
     container.style.display = 'block';
@@ -1505,8 +1547,9 @@ function processPayment() {
                 btn.disabled = false;
 
                 if (result.status === 'approved' || result.status === 'pending') {
-                    document.getElementById('modalStep2').style.display = 'none';
-                    document.getElementById('modalStep3').style.display = 'block';
+                    // Close modal and show full report
+                    closeTransitModal();
+                    showFullTransitReport();
                 } else {
                     alert(t('paymentError') + ': ' + (result.error || result.status_detail));
                 }

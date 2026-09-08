@@ -899,6 +899,55 @@ body {
     margin-bottom: 0.75rem;
 }
 
+.transit-paywall {
+    position: relative;
+    margin-top: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.transit-paywall-content {
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.transit-paywall-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, white 60%, rgba(255,255,255,0.9) 80%, rgba(255,255,255,0.7));
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+}
+
+.transit-paywall-overlay p {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.transit-paywall-overlay .btn-cta {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.transit-paywall-overlay .btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
 .transit-cta h3 {
     color: white;
     font-size: 1.2rem;
