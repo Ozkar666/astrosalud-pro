@@ -1,0 +1,192 @@
+# Estrategia de Imágenes y Publicación - AstroSalud Pro
+
+================================================================
+IDEAS PARA IMÁGENES PRINCIPALES
+================================================================
+
+** IMAGEN 1: Presentación (Día 1) **
+• Fondo: Degradado índigo/azul oscuro
+• Texto grande: "GRATIS por 7 días"
+• Elementos: Símbolos zodiacales (♈♉♊♋♌♍♎♏♐♑♒♓)
+• Logo de AstroSalud Pro
+• Estrellas decorativas doradas
+• Dimensión: 1200x630px (para OG image)
+
+** IMAGEN 2: Beneficios (Día 3) **
+• Fondo: Negro con puntos de estrellas
+• Lista visual con iconos:
+  ✓ Carta natal completa
+  ✓ Análisis de salud
+  ✓ Tránsitos
+  ✓ 3 idiomas
+  ✓ PDF descargable
+• Cada beneficio con icono dorado
+• Estilo elegante y profesional
+
+** IMAGEN 3: Urgencia (Día 5) **
+• Fondo: Rojo/naranja degradado
+• Texto: "QUEDAN 3 DÍAS"
+• Contador regresivo visual
+• Elementos: Reloj o calendario
+• Llamado a la acción: "No te quedes sin esto"
+• Colores llamativos
+
+** IMAGEN 4: Curiosidad (Día 4) **
+• Pregunta grande: "¿Sabías que tu signo afecta tu salud?"
+• Signo zodiacal de ejemplo
+• Dato interesante: "Los Leo tienen más problemas cardíacos"
+• Invitación a descubrir más
+• Fondo misterioso (púrpura/índigo)
+
+** IMAGEN 5: Testimonio/Resultado **
+• Captura de pantalla de la app
+• Ejemplo de análisis generado
+• Comentario de usuario: "¡Fascinante!"
+• Resultado real de la herramienta
+• Fondo limpio y profesional
+
+** IMAGEN 6: Final (Día 7) **
+• Fondo: Negro con borde dorado
+• Texto: "ÚLTIMO DÍA GRATIS"
+• Elementos: Fuego o estrella brillante
+• Urgencia máxima
+• Llamado a la acción claro
+
+================================================================
+ESPECIFICACIONES TÉCNICAS PARA IMÁGENES
+================================================================
+
+** Dimensiones: **
+• Facebook Feed: 1200x630 px (relación 1.91:1)
+• Facebook Stories: 1080x1920 px (relación 9:16)
+• Instagram Feed: 1080x1080 px (cuadrada)
+• Instagram Stories: 1080x1920 px
+
+** Formato: **
+• JPG o PNG
+• Máximo 8 MB
+• Calidad: 80-90%
+
+** Colores recomendados: **
+• Fondo principal: #0f172a (índigo oscuro)
+• Secundario: #1e1b4b (púrpura oscuro)
+• Acento 1: #6366f1 (índigo brillante)
+• Acento 2: #8b5cf6 (púrpura brillante)
+• Dorado: #fbbf24 (para estrellas y énfasis)
+• Texto: #ffffff (blanco)
+• Secundario: #94a3b8 (gris claro)
+
+** Herramientas gratuitas para crear imágenes: **
+• Canva (canva.com) - Plantillas prediseñadas
+• Figma (figma.com) - Diseño profesional
+• Photopea (photopea.com) - Alternativa a Photoshop
+• Pixlr (pixlr.com) - Editor online
+
+================================================================
+ESTRATEGIA DE PUBLICACIÓN POR 7 DÍAS
+================================================================
+
+** DÍA 1 (Lunes) - PRESENTACIÓN **
+Hora: 8:00 PM
+Publicación: Variación larga (beneficios completos)
+Imagen: IMAGEN 1 (Presentación)
+Acción: Compartir en 5 grupos mínimo
+
+** DÍA 2 (Martes) - RECORDATORIO **
+Hora: 12:00 PM (almuerzo)
+Publicación: Variación corta
+Imagen: IMAGEN 2 (Beneficios)
+Acción: Responder todos los comentarios del día 1
+
+** DÍA 3 (Miércoles) - BENEFICIOS **
+Hora: 7:30 PM
+Publicación: Variación media
+Imagen: IMAGEN 2 (Beneficios detallados)
+Acción: Crear evento de Facebook "7 días gratis"
+
+** DÍA 4 (Jueves) - CURIOSIDAD **
+Hora: 9:00 PM
+Publicación: Pregunta o dato curioso
+Imagen: IMAGEN 4 (Curiosidad)
+Acción: "¿Cuál es tu signo?" para generar comentarios
+
+** DÍA 5 (Viernes) - URGENCIA **
+Hora: 8:00 PM
+Publicación: Variación corta con urgencia
+Imagen: IMAGEN 3 (Urgencia: quedan 3 días)
+Acción: Recordar en Stories
+
+** DÍA 6 (Sábado) - ÚLTIMA OPORTUNIDAD **
+Hora: 7:00 PM
+Publicación: Variación larga
+Imagen: IMAGEN 5 (Testimonio/resultado)
+Acción: Compartir en todos los grupos posibles
+
+** DÍA 7 (Domingo) - ÚLTIMO DÍA **
+Hora: 10:00 AM, 3:00 PM, 8:00 PM (3 publicaciones)
+Publicación: Variación corta urgente
+Imagen: IMAGEN 6 (Último día)
+Acción: Recordatorio cada pocas horas
+
+================================================================
+CONSEJOS PARA MÁS ENGAGEMENT
+================================================================
+
+1. **Incluir pregunta al final** ("¿Cuál es tu signo?")
+2. **Responder rápido** a comentarios (primera hora crítica)
+3. **Usar emojis** estratégicamente (✨, , , , )
+4. **Crear urgencia** ("Solo quedan X días")
+5. **Ofrecer algo extra** ("El primero en comentar recibe...")
+6. **Usar video corto** si es posible (mayor alcance)
+7. **Compartir en historias** diariamente
+8. **Etetar amigos** que les interese
+9. **Usar LOCALización** si aplica
+10. **Pedir compartir** ("Comparte con alguien que le guste la astrología")
+
+================================================================
+CREAR EVENTO EN FACEBOOK
+================================================================
+
+** Título: **
+"AstroSalud Pro: 7 Días GRATIS de Análisis de Salud Astrológica"
+
+** Descripción: **
+"Únete a nuestra celebración de lanzamiento. Durante 7 días, AstroSalud Pro estará completamente GRATIS. Crea tu carta natal y descubre qué dicen los planetas sobre tu salud."
+
+** Fecha: **
+Inicio: Lunes de esta semana, 12:00 AM
+Fin: Domingo de esta semana, 11:59 PM
+
+** Categoría: **
+"Salud/fitness" o "Clases"
+
+** Ubicación: **
+Online (URL de tu app)
+
+** Imagen: **
+Usar IMAGEN 1
+
+================================================================
+MEDIR RESULTADOS
+================================================================
+
+** Métricas a monitorear: **
+• Alcance del post
+• Me gusta, comentarios, compartidos
+• Clics en el enlace
+• Nuevos usuarios registrados
+• Tiempo en la app
+• Tasa de rebote
+
+** Herramientas: **
+• Facebook Insights (gratis)
+• Google Analytics (en tu app)
+• Bitly (para acortar y rastrear enlaces)
+
+** Ajustes según resultados: **
+• Si bajo engagement → Cambiar imagen o texto
+• Si bajo alcance → Publicar en más grupos
+• Si bajo clics → Mejorar llamado a la acción
+• Si bajo registros → Simplificar proceso de registro
+
+================================================================

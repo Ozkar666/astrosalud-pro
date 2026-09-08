@@ -1,0 +1,283 @@
+# Estrategia Completa de Google - AstroSalud Pro
+# Guía paso a paso para usar todas las herramientas gratuitas de Google
+
+================================================================
+PASO 1: GOOGLE SEARCH CONSOLE (Prioridad Máxima)
+================================================================
+
+** ¿Qué es? **
+Herramienta gratuita de Google para monitorear tu sitio en búsquedas.
+
+**Cómo configurarlo: **
+1. Ve a: search.google.com/search-console
+2. Inicia sesión con tu cuenta de Google
+3. Haz clic en "Agregar propiedad"
+4. Selecciona "Prefijo de URL"
+5. Ingresa: https://astrosalud-pro.pages.dev
+6. Elige "Etiqueta HTML" como método de verificación
+7. Copia el código de verificación
+
+**Importante: **
+• El código se ve así: `<meta name="google-site-verification" content="ABC123...">`
+• Ya agregué un placeholder en tu index.html
+• Reemplaza "TU_CODIGO_DE_VERIFICACION_AQUI" con tu código real
+
+**Pasos después de verificar: **
+1. Envía tu sitemap: search.google.com/search-control → Sitemaps → Agregar sitemap
+2. URL: https://astrosalud-pro.pages.dev/sitemap.xml
+3. Espera 24-48 horas para que Google indexe
+4. Revisa "Experiencia" para ver si hay errores
+
+================================================================
+PASO 2: GOOGLE ANALYTICS (Análisis de tráfico)
+================================================================
+
+** ¿Qué es? **
+Herramienta gratuita para ver quién visita tu sitio.
+
+**Cómo configurarlo:**
+1. Ve a: analytics.google.com
+2. Haz clic en "Administrador" (engranaje)
+3. "Crear cuenta" → Nombre: "AstroSalud Pro"
+4. Selecciona "Web"
+5. Ingresa la URL: https://astrosalud-pro.pages.dev
+6. Crea una "Propiedad"
+7. Crea un "Flujo de datos"
+8. Copia el "ID de medición" (comienza con G-)
+
+**Cómo integrarlo:**
+• Agrega el script de Google Analytics en tu HTML
+• O usa Google Tag Manager (recomendado)
+
+**Métricas importantes:**
+• Usuarios activos
+• Páginas vistas
+• Duración promedio de sesión
+• Páginas por sesión
+• Fuentes de tráfico
+• Dispositivos usados
+
+================================================================
+PASO 3: GOOGLE MY BUSINESS (Si tienes local físico)
+================================================================
+
+**¿Qué es? **
+Perfil de negocio en Google Maps y búsquedas locales.
+
+**¿Sirve para apps online? **
+Sí, si quieres:
+• Aparecer en búsquedas locales
+• Recibir reseñas
+• Compartir actualizaciones
+
+**Cómo crearlo:**
+1. Ve a: business.google.com
+2. Haz clic en "Administrar ahora"
+3. Ingresa el nombre: "AstroSalud Pro"
+4. Selecciona "Servicio en línea"
+5. Categoría: "Aplicación móvil" o "Servicio de astrología"
+6. Agrega URL: https://astrosalud-pro.pages.dev
+7. Verifica tu negocio (Google envía tarjeta o llama)
+
+================================================================
+PASO 4: GOOGLE TRENDS (Investigación de tendencias)
+================================================================
+
+**¿Qué es? **
+Ve qué está buscando la gente en tiempo real.
+
+**Cómo usarlo para AstroSalud Pro:**
+1. Ve a: trends.google.com
+2. Busca: "astrología", "carta natal", "horóscopo"
+3. Selecciona región: "México" o "España" o "Todos"
+4. Filtra por: "Últimos 12 meses"
+5. Anota los picos de búsqueda
+
+**Ideas de contenido basadas en tendencias:**
+• Cuando hay eclipse → "Cómo afecta el eclipse a tu salud"
+• Luna llena → "Luna llena en [signo] y tu cuerpo"
+• Retrogradación de Mercurio → "Mercurio retrógrafo y los nervios"
+
+================================================================
+PASO 5: GOOGLE KEYWORD PLANNER (Investigación de keywords)
+================================================================
+
+**¿Qué es? **
+Herramienta para encontrar palabras clave con volumen de búsqueda.
+
+**Cómo usarlo:**
+1. Ve a: ads.google.com/aw/keywordplaner
+2. Necesitas cuenta Google Ads (es gratis)
+3. Selecciona "Descubrir nuevas palabras clave"
+4. Ingresa: "carta natal salud"
+5. Selecciona ubicación: "España", "México", etc.
+6. Selecciona idioma: "Español"
+7. Haz clic en "Ver resultados"
+
+**Datos que obtendrás:**
+• Volumen de búsqueda promedio
+• Competencia (baja/media/alta)
+• Precio por clic sugerido
+• Palabras clave relacionadas
+
+**Estrategia:**
+• Enfócate en keywords con:
+  - Volumen: 100-1,000 búsquedas/mes
+  - Competencia: Baja o Media
+  - Intención de búsqueda: Informativa
+
+================================================================
+PASO 6: GOOGLE AUTOCOMPLETE (Ideas de contenido)
+================================================================
+
+**¿Qué es? **
+Las sugerencias que aparecen al escribir en Google.
+
+**Cómo usarlo:**
+1. Abre Google en modo incógnito
+2. Escribe: "carta natal" y NO presiones Enter
+3. Anota las sugerencias que aparecen
+4. Prueba con: "astrología y", "signos zodiacales y", etc.
+
+**Ejemplo de sugerencias:**
+• "carta natal gratis"
+• "carta natal online"
+• "carta natal con hora exacta"
+• "carta natal y salud"
+• "carta natal interpretation"
+
+**Crear contenido para cada sugerencia:**
+• "¿Cómo crear tu carta natal gratis?" → Artículo
+• "Carta natal con hora exacta" → Tutorial
+• "Carta natal y salud" → Artículo principal
+
+================================================================
+PASO 7: GOOGLE "PERSONAS TAMBIÉN BUSCAN"
+================================================================
+
+**¿Qué es? **
+Preguntas relacionadas que aparecen en los resultados de búsqueda.
+
+**Cómo usarlo:**
+1. Busca en Google: "astrología y salud"
+2. Desplázate hasta "Personas también buscan"
+3. Anota todas las preguntas
+4. Crea contenido que responda cada pregunta
+
+**Ejemplo de preguntas:**
+• "¿Qué dice tu carta natal sobre tu salud?"
+• "¿Cómo afecta mi signo a mi cuerpo?"
+• "¿Los planetas influyen en las enfermedades?"
+• "¿Qué casa gobierna la salud?"
+
+================================================================
+PASO 8: GOOGLE OPTIMIZER (A/B Testing)
+================================================================
+
+**¿Qué es? **
+Herramienta para probar versiones diferentes de tu sitio.
+
+**Cómo usarlo:**
+1. Ve a: optimize.google.com
+2. Crea un experimento
+3. Versión A: Página actual
+4. Versión B: Página con cambios
+5. Mide cuál funciona mejor
+
+**Qué probar:**
+• Botón CTA: "Calcular Carta" vs "Descubre tu Salud"
+• Color del botón: Azul vs Verde
+• Título: "Carta Natal Gratis" vs "Análisis de Salud"
+• Ubicación del formulario
+
+================================================================
+PASO 9: GOOGLE TAG MANAGER (Gestión de etiquetas)
+================================================================
+
+**¿Qué es? **
+Herramienta para agregar código de seguimiento sin modificar HTML.
+
+**Cómo usarlo:**
+1. Ve a: tagmanager.google.com
+2. Crea una cuenta
+3. Crea un contenedor para tu web
+4. Agrega el código en tu HTML
+5. Configura etiquetas:
+   - Google Analytics
+   - Facebook Pixel
+   - Hotjar (heatmaps)
+   - Chat widgets
+
+**Ventajas:**
+• No necesitas modificar código
+• Actualizaciones en tiempo real
+• Versiones y permisos
+
+================================================================
+RESUMEN: ORDEN DE IMPLEMENTACIÓN
+================================================================
+
+** Semana 1: **
+1. ✅ Google Search Console (verificar sitio)
+2. ✅ Google Analytics (configurar)
+3. ✅ Google Keyword Planner (investigar)
+
+** Semana 2: **
+4. Google Trends (analizar tendencias)
+5. Google Autocomplete (ideas de contenido)
+6. Crear sitemap.xml y robots.txt
+
+** Semana 3: **
+7. Google My Business (si aplica)
+8. Google Tag Manager (configurar)
+9. Primer artículo de blog
+
+** Semana 4: **
+10. Google Optimize (A/B testing)
+11. Segundo artículo de blog
+12. Medir resultados
+
+================================================================
+HERRAMIENTAS ADICIONALES GRATUITAS
+================================================================
+
+** Answer The Public: **
+• URL: answerthepublic.com
+• Preguntas que hace la gente
+• 3 búsquedas gratis/día
+
+** Ubersuggest: **
+• URL: neilpatel.com/ubersuggest
+• Análisis de keywords
+• 3 búsquedas gratis/día
+
+** Yoast SEO (WordPress): **
+• Si usas WordPress
+• Optimización on-page
+• XML sitemaps automático
+
+** Screaming Frog (versión gratis): **
+• Análisis técnico
+• Errores 404
+• Meta tags duplicados
+
+================================================================
+MÉTRICAS DE ÉXITO (Objetivos a 3 meses)
+================================================================
+
+** Google Search Console: **
+• 100+ impresiones/día
+• 10+ clics/día
+• Posición media < 20
+
+** Google Analytics: **
+• 500+ visitas/mes
+• Tiempo promedio > 2 minutos
+• Tasa de rebote < 60%
+
+** Posiciones en Google: **
+• "carta natal y salud" → Top 10
+• "astrología y salud" → Top 20
+• "análisis de salud astrológico" → Top 5
+
+================================================================

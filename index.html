@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroSalud Pro - Análisis Astrológico de Salud | Carta Natal Gratis</title>
+    <meta name="description" content="Calcula tu carta natal gratis y descubre tus tendencias de salud según la astrología. Análisis profesional con Swiss Ephemeris, dignidades planetarias y tránsitos.">
+    <meta name="keywords" content="carta natal, astrología, salud, análisis astrológico, natal chart, horóscopo, planetas, casas astrológicas, tránsitos, dignidades, Swiss Ephemeris">
+    <meta name="author" content="AstroSalud Pro">
+    <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="bnyRr2JEDOLOqXy5sf5l43teGmy-0yfdQFxTGweHM1s">
+    <link rel="canonical" href="https://astrosalud-pro.pages.dev/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://astrosalud-pro.pages.dev/">
+    <meta property="og:title" content="AstroSalud Pro - Análisis Astrológico de Salud">
+    <meta property="og:description" content="Calcula tu carta natal gratis y descubre tus tendencias de salud según la astrología. Análisis profesional con Swiss Ephemeris.">
+    <meta property="og:image" content="https://astrosalud-pro.pages.dev/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="it_IT">
+    <meta property="og:locale:alternate" content="ru_RU">
+    <meta property="og:locale:alternate" content="uk_UA">
+    <meta property="og:locale:alternate" content="sv_SE">
+    <meta property="og:locale:alternate" content="ja_JP">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta property="og:locale:alternate" content="ko_KR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://astrosalud-pro.pages.dev/">
+    <meta name="twitter:title" content="AstroSalud Pro - Análisis Astrológico de Salud">
+    <meta name="twitter:description" content="Calcula tu carta natal gratis y descubre tus tendencias de salud según la astrología.">
+    <meta name="twitter:image" content="https://astrosalud-pro.pages.dev/og-image.jpg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AstroSalud Pro",
+        "url": "https://astrosalud-pro.pages.dev/",
+        "description": "Calcula tu carta natal gratis y descubre tus tendencias de salud según la astrología.",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "inLanguage": ["es", "en", "pt-BR", "fr", "de", "it", "ru", "uk", "sv", "ja", "zh-CN", "ko"]
+    }
+    </script>
+
+    <link rel="stylesheet" href="/src/style.css">
+    <script>
+      window.SENTRY_DSN = ''; // Set your Sentry DSN here or via env variable
+    </script>
+</head>
+<body>
+    <a href="#birthForm" class="skip-nav">Skip to form</a>
+    <header class="main-header">
+        <h1 data-i18n="title">AstroSalud Pro</h1>
+        <p data-i18n="subtitle">Análisis Astrológico Profesional - Swiss Ephemeris</p>
+    </header>
+
+    <div class="disclaimer-banner">
+        <strong data-i18n="disclaimer">AVISO LEGAL: Este software es solo para entretenimiento y estudio. NO sustituye el consejo médico profesional.</strong>
+    </div>
+
+    <main class="container">
+        <section class="input-section">
+            <h2>Datos de Nacimiento</h2>
+            <form id="birthForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="language">Idioma / Language</label>
+                        <select id="language">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                            <option value="pt-BR">Português (Brasil)</option>
+                            <option value="fr">Français</option>
+                            <option value="de">Deutsch</option>
+                            <option value="it">Italiano</option>
+                            <option value="ru">Русский</option>
+                            <option value="uk">Українська</option>
+                            <option value="sv">Svenska</option>
+                            <option value="ja">日本語</option>
+                            <option value="zh-CN">中文（简体）</option>
+                            <option value="ko">한국어</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate" data-i18n="date">Fecha</label>
+                        <input type="date" id="birthDate" required aria-required="true">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="birthTime" data-i18n="time">Hora (local)</label>
+                        <input type="time" id="birthTime" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthPlace" data-i18n="place">Lugar</label>
+                        <div class="place-input-wrapper">
+                            <input type="text" id="birthPlace" data-i18n-placeholder="placeHolder" placeholder="Ciudad, País" required autocomplete="off" role="combobox" aria-expanded="false" aria-controls="placeAutocomplete" aria-autocomplete="list" aria-label="Birth place" aria-required="true">
+                            <div id="placeAutocomplete" class="autocomplete-dropdown" role="listbox" aria-label="Location suggestions"></div>
+                        </div>
+                        <input type="hidden" id="birthLat">
+                        <input type="hidden" id="birthLon">
+                        <input type="hidden" id="birthTz">
+                        <input type="hidden" id="birthCountryCode">
+                        <div id="locationMessage" class="location-message" style="display:none;"></div>
+                        <div id="manualCoordsSection" class="manual-coords-section" style="display:none;" role="region" aria-label="Manual coordinate entry">
+                            <div class="form-row" style="margin-bottom:0;">
+                                <div class="form-group">
+                                    <label for="manualLat" data-i18n="latitude">Latitud</label>
+                                    <input type="number" id="manualLat" step="any" min="-90" max="90" placeholder="ej: 21.1167">
+                                </div>
+                                <div class="form-group">
+                                    <label for="manualLon" data-i18n="longitude">Longitud</label>
+                                    <input type="number" id="manualLon" step="any" min="-180" max="180" placeholder="ej: -101.6833">
+                                </div>
+                            </div>
+                            <div class="form-row" style="margin-bottom:0;">
+                                <div class="form-group">
+                                    <label for="manualTz" data-i18n="timezoneOffset">Zona Horaria (UTC)</label>
+                                    <select id="manualTz"></select>
+                                </div>
+                                <div class="form-group" style="justify-content:flex-end;">
+                                    <button type="button" id="useManualCoords" class="btn-manual-coords" data-i18n="useManualCoords">Usar coordenadas manuales</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="houseSystem" data-i18n="houseSystem">Sistema de Casas</label>
+                        <select id="houseSystem">
+                            <option value="placidus">Placidus</option>
+                            <option value="whole" data-i18n="houseWhole">Signo Entero</option>
+                            <option value="equal" data-i18n="houseEqual">Igual</option>
+                            <option value="koch">Koch</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="timezoneSelect">Zona Horaria</label>
+                        <select id="timezoneSelect">
+                            <option value="">Auto (según ubicación)</option>
+                        </select>
+                        <small class="tz-note" id="tzNote"></small>
+                    </div>
+                </div>
+
+                <details class="medical-history-toggle">
+                    <summary class="medical-summary" data-i18n="medicalToggle">Historial Clínico del Consultante (opcional — mejora el diagnóstico)</summary>
+                    <div class="medical-history-form">
+                        <p class="medical-desc" data-i18n="medicalDesc">Esta información se cruza con tu carta natal para un análisis más preciso. Nada de esto se almacena ni comparte.</p>
+
+                        <div class="form-group-full">
+                            <label for="chronicDiseases" data-i18n="chronicDiseases">Enfermedades crónicas o ya adquiridas</label>
+                            <textarea id="chronicDiseases" rows="3" data-i18n-placeholder="chronicPlaceholder" placeholder="Ej: Hipertensión diagnosticada a los 35..."></textarea>
+                        </div>
+
+                        <div class="form-group-full">
+                            <label for="recurrentAilments" data-i18n="recurrentAilments">Padecimientos recurrentes</label>
+                            <textarea id="recurrentAilments" rows="3" data-i18n-placeholder="recurrentPlaceholder" placeholder="Ej: Dolor de cabeza frecuente..."></textarea>
+                        </div>
+
+                        <div class="form-group-full">
+                            <label for="birthDefects" data-i18n="birthDefects">Defectos o condiciones de nacimiento</label>
+                            <textarea id="birthDefects" rows="2" data-i18n-placeholder="birthDefectsPlaceholder" placeholder="Ej: Labio leporino, pie zambo..."></textarea>
+                        </div>
+
+                        <div class="form-group-full">
+                            <label for="harmfulBehaviors" data-i18n="harmfulBehaviors">Tendencias dañinas de comportamiento</label>
+                            <textarea id="harmfulBehaviors" rows="3" data-i18n-placeholder="harmfulPlaceholder" placeholder="Ej: Insomnio crónico, sedentarismo..."></textarea>
+                        </div>
+                    </div>
+                </details>
+
+                <button type="submit" class="btn-primary" data-i18n="generateChart">Generar Carta Natal</button>
+            </form>
+        </section>
+
+        <section id="loading" style="display:none;">
+            <p class="loading-text" data-i18n="calculating">Calculando con Swiss Ephemeris...</p>
+        </section>
+
+        <section id="results" style="display:none;">
+            <h2 data-i18n="birthData">Carta Natal</h2>
+
+            <div class="chart-container">
+                <div class="chart-layout">
+                    <div id="chartSvg" class="chart-svg"></div>
+                    <div id="chartData" class="chart-data"></div>
+                </div>
+            </div>
+
+            <div id="healthResults" class="health-section"></div>
+
+            <section id="transitSection" class="section-card transit-controls" style="display:none;">
+                <h2 data-i18n="transitTitle">Análisis de Tránsitos</h2>
+                <p class="transit-desc" data-i18n="transitDesc">Selecciona una fecha para analizar tránsitos planetarios sobre tu carta natal.</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transitDate" data-i18n="transitDate">Fecha de Tránsitos</label>
+                        <input type="date" id="transitDate">
+                    </div>
+                    <div class="form-group" style="justify-content:flex-end;">
+                        <button id="transitBtn" class="btn-primary" style="width:auto;" data-i18n="transitBtn">Calcular Tránsitos</button>
+                    </div>
+                </div>
+            </section>
+
+            <div id="transitResults" class="health-section" style="display:none;"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p data-i18n="footerEngine">Motor: Swiss Ephemeris (@swisseph/browser) | Casas: Placidus | Zodíaco: Tropical</p>
+        <p data-i18n="footerCopy">© 2026 AstroSalud Pro - Para uso educativo y de entretenimiento</p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

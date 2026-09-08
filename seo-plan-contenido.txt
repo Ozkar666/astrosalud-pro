@@ -1,0 +1,225 @@
+# Plan de Contenido SEO - Blog AstroSalud Pro
+# Estrategia de contenido optimizado para Google
+
+================================================================
+ESTRATEGIA DE CONTENIDO
+================================================================
+
+** Objetivo: **
+• Atraer tráfico orgánico de Google
+• Posicionar palabras clave de cola larga
+• Establecer autoridad en el nicho de astrología + salud
+• Generar confianza en los usuarios
+
+** Frecuencia recomendada: **
+• 2-4 artículos por mes
+• Cada artículo: 1,500-2,500 palabras
+• Optimizados para 1-2 palabras clave principales
+
+** Estructura del blog: **
+• /blog/ (página principal)
+• /blog/[slug-del-articulo] (cada artículo)
+
+================================================================
+ARTÍCULOS PRIORIDAD ALTA (Hacer primero)
+================================================================
+
+** Artículo 1: "Carta Natal y Salud: Qué Dice tu Signo sobre tu Cuerpo" **
+Palabras clave: carta natal y salud, signos zodiacales y salud, astrología y cuerpo
+Volumen: 720 búsquedas/mes
+Extensión: 2,000 palabras
+Estructura:
+• Introducción (¿Qué es la carta natal?)
+• Los 12 signos y su relación con el cuerpo
+• Ejemplos de análisis
+• Cómo crear tu carta gratis
+• CTA: Prueba nuestra herramienta
+
+** Artículo 2: "Las 12 Casas Astrológicas y su Significado en Salud" **
+Palabras clave: casas astrológicas salud, casa VI salud, casa I salud
+Volumen: 480 búsquedas/mes
+Extensión: 2,200 palabras
+Estructura:
+• Introducción a las casas
+• Casa I: Ascendente y vitalidad
+• Casa VI: Salud y enfermedad
+• Casa VIII: Transformación y crisis
+• Casa XII: Enfermedades ocultas
+• Ejemplos prácticos
+• CTA: Analiza tus casas con nosotros
+
+** Artículo 3: "Cómo Afectan los Tránsitos Planetarios a tu Salud" **
+Palabras clave: tránsitos planetarios salud, tránsitos y salud, planetas y cuerpo
+Volumen: 320 búsquedas/mes
+Extensión: 1,800 palabras
+Estructura:
+• ¿Qué son los tránsitos?
+• Saturno: restricciones y huesos
+• Marte: inflamaciones y accidentes
+• Júpiter: expansión y peso
+• Cómo calcular tus tránsitos
+• CTA: Calcula tus tránsitos gratis
+
+** Artículo 4: "Dignidades Planetarias: Domulario, Exaltación y Salud" **
+Palabras clave: dignidades planetarias, domicilio exaltación, signos zodiacales fuertes
+Volumen: 260 búsquedas/mes
+Extensión: 1,600 palabras
+Estructura:
+• ¿Qué son las dignidades?
+• Planeta en domicilio: fortaleza
+• Planeta en exaltación: potencia
+• Planeta en detrimento: debilidad
+• Planeta en caída: vulnerabilidad
+• Ejemplos de salud
+• CTA: Consulta tus dignidades
+
+** Artículo 5: "Signos de Fuego, Tierra, Aire y Agua: Diferencias en Salud" **
+Palabras clave: signos de fuego salud, elementos zodiacales, signos de tierra salud
+Volumen: 210 búsquedas/mes
+Extensión: 1,500 palabras
+Estructura:
+• Introducción a los elementos
+• Fuego (Aries, Leo, Sagitario): corazón, espalda
+• Tierra (Tauro, Virgo, Capricornio): garganta, digestión
+• Aire (Géminis, Libra, Acuario): pulmones, nervios
+• Agua (Cáncer, Escorpio, Piscis): estómago, emociones
+• Recomendaciones por elemento
+• CTA: Descubre tu elemento dominante
+
+================================================================
+ARTÍCULOS PRIORIDAD MEDIA (Hacer después)
+================================================================
+
+** Artículo 6: "Saturno en tu Carta Natal: Restrictor y Maestro" **
+Palabras clave: Saturno carta natal, Saturno y salud, restrictor en astrología
+Volumen: 170 búsquedas/mes
+
+** Artículo 7: "Luna en Casa VI: Cómo Afecta tu Salud Emocional" **
+Palabras clave: Luna casa VI, Luna y salud, emociones y digestión
+Volumen: 140 búsquedas/mes
+
+** Artículo 8: "Marte y los Accidentes: Cómo Protegerte" **
+Palabras clave: Marte accidentes, Marte y salud, inflamaciones en astrología
+Volumen: 110 búsquedas/mes
+
+** Artículo 9: "Júpiter: El Planeta de la Expansión y el Peso" **
+Palabras clave: Júpiter peso, Júpiter y salud, excesos en astrología
+Volumen: 90 búsquedas/mes
+
+** Artículo 10: "Mercurio y los Nervios: Ansiedad en tu Carta" **
+Palabras clave: Mercurio nervios, ansiedad astrología, Mercurio salud
+Volumen: 70 búsquedas/mes
+
+================================================================
+ARTÍCULOS PRIORIDAD BAJA (Largo plazo)
+================================================================
+
+** Artículo 11: "Venus y la Salud: Armonía Corporal" **
+** Artículo 12: "Neptuno: Adicciones y Confusión" **
+** Artículo 13: "Urano: Accidentes y Cambios Repentinos" **
+** Artículo 14: "Plutón: Transformación y Cirugías" **
+** Artículo 15: "El Sol en tu Carta: Vitalidad y Corazón" **
+
+================================================================
+ESTRUCTURA DE CADA ARTÍCULO (Template)
+================================================================
+
+** Título: **
+• Incluir palabra clave principal
+• Máximo 60 caracteres
+• Formato: "Palabra Clave + Beneficio"
+
+** Meta Description: **
+• 150-160 caracteres
+• Incluir palabra clave
+• Llamado a la acción
+
+** Estructura del contenido: **
+1. H1: Título principal (1 vez)
+2. Introducción (100-150 palabras)
+3. H2: Subtítulo principal (3-5 veces)
+4. H3: Sub-subtítulos (5-10 veces)
+5. Listas y viñetas
+6. Imágenes con alt-text
+7. Enlaces internos (2-3)
+8. Enlaces externos (1-2)
+9. CTA al final
+
+** Palabras clave LSI (relacionadas) **
+• Incluir sinónimos y términos relacionados
+• No keyword stuffing (máximo 2% densidad)
+
+================================================================
+OPTIMIZACIÓN TÉCNICA POR ARTÍCULO
+================================================================
+
+** URLs amigables: **
+• /blog/carta-natal-y-salud
+• /blog/casas-astrológicas-salud
+• /blog/transitos-planetarios-salud
+
+** Schema markup para artículos: **
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Título del artículo",
+  "author": {
+    "@type": "Organization",
+    "name": "AstroSalud Pro"
+  },
+  "datePublished": "2026-09-07",
+  "image": "https://astrosalud-pro.pages.dev/og-image.jpg"
+}
+```
+
+** Imágenes: **
+• Formato WebP o JPG
+• Tamaño máximo: 100KB
+• Alt-text descriptivo
+• Dimensiones: 1200x630 para featured image
+
+================================================================
+CALENDARIO DE CONTENIDO (3 meses)
+================================================================
+
+** Mes 1: **
+• Semana 1: Artículo 1 (Carta natal y salud)
+• Semana 2: Artículo 2 (Casas astrológicas)
+• Semana 3: Artículo 3 (Tránsitos)
+• Semana 4: Artículo 4 (Dignidades)
+
+** Mes 2: **
+• Semana 1: Artículo 5 (Elementos)
+• Semana 2: Artículo 6 (Saturno)
+• Semana 3: Artículo 7 (Luna)
+• Semana 4: Artículo 8 (Marte)
+
+** Mes 3: **
+• Semana 1: Artículo 9 (Júpiter)
+• Semana 2: Artículo 10 (Mercurio)
+• Semana 3: Artículo 11 (Venus)
+• Semana 4: Artículo 12 (Neptuno)
+
+================================================================
+MÉTRICAS A MONITOREAR
+================================================================
+
+** Google Search Console: **
+• Impresiones por palabra clave
+• Clics por palabra clave
+• Posición media
+• CTR (tasa de clics)
+
+** Google Analytics: **
+• Páginas vistas
+• Tiempo en página
+• Tasa de rebote
+• Fuentes de tráfico
+
+** Objetivos por mes: **
+• Mes 1: 100 visitas orgánicas
+• Mes 2: 300 visitas orgánicas
+• Mes 3: 1,000 visitas orgánicas
+
+================================================================

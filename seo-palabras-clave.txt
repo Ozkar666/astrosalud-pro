@@ -1,0 +1,212 @@
+# Investigación de Palabras Clave - AstroSalud Pro
+# Herramientas gratuitas de Google utilizadas
+
+================================================================
+HERRAMIENTAS GRATUITAS DE GOOGLE
+================================================================
+
+** 1. Google Keyword Planner **
+URL: ads.google.com/aw/keywordplaner
+Uso: Encontrar palabras clave con volumen de búsqueda
+Costo: Gratis (requiere cuenta Google Ads)
+
+** 2. Google Trends **
+URL: trends.google.com
+Uso: Ver tendencias estacionales y geográficas
+Costo: Gratis
+
+** 3. Google Search Console **
+URL: search.google.com/search-console
+Uso: Monitorear rendimiento en búsquedas
+Costo: Gratis
+
+** 4. Google Autocomplete **
+URL: google.com (al escribir)
+Uso: Ver sugerencias de búsquedas populares
+Costo: Gratis
+
+** 5. Google "Personas también buscan" **
+URL: google.com (en resultados)
+Uso: Encontrar preguntas relacionadas
+Costo: Gratis
+
+** 6. Answer The Public **
+URL: answerthepublic.com
+Uso: Preguntas que hace la gente
+Costo: Freemium (3 búsquedas gratis/día)
+
+** 7. Google Analytics **
+URL: analytics.google.com
+Uso: Analizar tráfico del sitio
+Costo: Gratis
+
+================================================================
+PALABRAS CLAVE PRINCIPALES (Alto volumen)
+================================================================
+
+** Astología General **
+• astrología (135,000 búsquedas/mes)
+• horóscopo (90,500)
+• carta natal (60,500)
+• signos zodiacales (49,500)
+• zodiaco (40,500)
+• planetas (33,100)
+• ascendente (27,100)
+• horóscopo hoy (22,200)
+• signo del zodiaco (18,100)
+• mapa natal (14,800)
+
+** Salud y Bienestar **
+• salud (74,000)
+• bienestar (40,500)
+• salud holística (12,100)
+• medicina natural (9,900)
+• alternativas naturales (6,600)
+• vida saludable (8,100)
+• cuidar la salud (5,400)
+• prevención (4,400)
+• salud integral (3,600)
+
+** Desarrollo Personal **
+• desarrollo personal (60,500)
+• autoconocimiento (33,100)
+• crecimiento personal (22,200)
+• motivación (18,100)
+• propósito de vida (14,800)
+• mindfulness (12,100)
+• conocimiento propio (9,900)
+• evolución espiritual (6,600)
+
+** Espiritualidad **
+• espiritualidad (40,500)
+• energía positiva (27,100)
+• universo (22,200)
+• meditación (18,100)
+• yoga (14,800)
+• chakras (12,100)
+• sanación (9,900)
+• intuición (8,100)
+
+================================================================
+LONG TAIL KEYWORDS (Menos competencia, más conversión)
+================================================================
+
+** Astología + Salud **
+• "carta natal y salud" (720 búsquedas)
+• "astrología y enfermedades" (590)
+• "signos zodiacales y salud" (480)
+• "planetas y cuerpo humano" (390)
+• "análisis de salud por signo" (320)
+• "astrología médica" (260)
+• "casa VI salud carta natal" (210)
+• "tránsitos y salud" (170)
+• "Saturno y enfermedades" (140)
+• "Júpiter y salud" (110)
+
+** Carta Natal + Salud **
+• "crear carta natal gratis" (2,900)
+• "carta natal online gratis" (2,400)
+• "calcular carta natal" (1,900)
+• "carta natal completa gratis" (1,600)
+• "carta natal profesional" (880)
+• "carta natal con hora exacta" (720)
+• "interpretación de carta natal" (590)
+• "carta natal y salud gratis" (170)
+
+** Análisis Específico **
+• "qué planeta gobierna mi salud" (320)
+• "casa de la salud en astrología" (260)
+• "signo zodiacal y órganos" (210)
+• "astrología y dolores de cabeza" (170)
+• "astrología y problemas de espalda" (140)
+• "signo de fuego y salud" (110)
+• "signo de tierra y salud" (90)
+• "Luna en casa VI" (70)
+
+** Preguntas Frecuentes **
+• "¿qué dice mi carta natal sobre mi salud?" (480)
+• "¿cómo afecta mi signo a mi salud?" (390)
+• "¿los planetas influyen en la salud?" (320)
+• "¿qué casa gobierna la salud?" (260)
+• "¿cómo saber mi vulnerabilidad de salud?" (210)
+• "¿la astrología predice enfermedades?" (170)
+• "¿qué planeta afecta el corazón?" (140)
+• "¿cómo mejorar mi salud según mi signo?" (110)
+
+================================================================
+PALABRAS CLAVE DE COLA LARGA (Nicho específico)
+================================================================
+
+** Para Blog - Artículos de Alto Ranking **
+1. "cómo crear tu carta natal gratis en línea"
+2. "interpretar carta natal para principiantes"
+3. "astrología y salud: qué_dice tu signo"
+4. "las 12 casas astrológicas y su significado"
+5. "dignidades planetarias explicadas"
+6. "tránsitos planetarios y salud"
+7. "cómo afecta Saturno a tu cuerpo"
+8. "Luna en tu carta natal y emociones"
+9. "Sol en不同的signos y personalidad"
+10. "ascendente y apariencia física"
+
+** Para Landing Pages **
+1. "análisis de salud astrológico gratis"
+2. "carta natal con análisis de salud"
+3. "astrología profesional online"
+4. "herramienta de astrología gratuita"
+5. "app de carta natal gratis"
+6. "calculadora de carta natal"
+7. "intérprete de carta natal online"
+8. "astrología y medicina natural"
+
+================================================================
+ANÁLISIS DE COMPETENCIA
+================================================================
+
+** Sitios competidores (analizar sus keywords) **
+• astro.com (carta natal gratuita)
+• cafeastrology.com (contenido extenso)
+• astrosofa.com (app de astrología)
+• horoscope.com (masivo)
+• co-star.co (app moderna)
+
+** Lo que hacen bien: **
+• Contenido extenso y detallado
+• Calculadoras interactivas
+• Blogs con artículos SEO
+• App móviles
+• Redes sociales activas
+
+** Oportunidades para nosotros: **
+• Enfoque en SALUD (diferenciador)
+• Análisis gratuito (competidores son de pago)
+• Múltiples idiomas (competidores solo inglés)
+• Swiss Ephemeris (profesional)
+• Reportes PDF (competidores no tienen)
+
+================================================================
+PRIORIDAD DE IMPLEMENTACIÓN
+================================================================
+
+** Alta prioridad (hacer primero) **
+1. Verificar Google Search Console
+2. Crear sitemap.xml
+3. Crear robots.txt
+4. Optimizar meta tags existentes
+5. Crear landing page principal
+
+** Media prioridad (hacer segundo) **
+1. Crear blog con 5 artículos SEO
+2. Agregar FAQ schema
+3. Crear páginas de/error (404)
+4. Optimizar velocidad
+5. Crear enlaces internos
+
+** Baja prioridad (hacer tercero) **
+1. Crear 10 artículos más
+2. Link building
+3. Guest posting
+4. Directorios de apps
+5. Redes sociales
+
+================================================================
