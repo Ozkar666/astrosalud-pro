@@ -1509,63 +1509,77 @@ function processPayment() {
 
     // Parse expiry
     const [expMonth, expYear] = cardExpiry.split('/');
-    const expirationMonth = parseInt(expMonth);
-    const expirationYear = parseInt('20' + expYear);
 
-    // Create card token with Mercado Pago SDK
-    const cardData = {
-        cardNumber: cardNumber.replace(/\s/g, ''),
-        cardholderName: cardName,
-        identification: { type: 'CPF', number: cpf.replace(/\D/g, '') },
-        expirationMonth: expirationMonth,
-        expirationYear: expirationYear,
-        securityCode: cardCvv,
-    };
+    // Check if Mercado Pago SDK is loaded
+    if (!window.MercadoPago) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert('Error: Mercado Pago SDK no se cargó. Verifica tu conexión a internet.');
+        return;
+    }
 
-    window.MercadoPago.setPublishableKey(window.MP_PUBLIC_KEY);
+    try {
+        const mp = new window.MercadoPago(window.MP_PUBLIC_KEY);
 
-    window.MercadoPago.createToken(cardData, (status, response) => {
-        if (status === 200 && response.id) {
-            // Send to backend Worker
-            fetch(window.PAYMENT_WORKER_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    token: response.id,
-                    paymentMethodId: response.payment_method_id,
-                    installments: installments,
-                    amount: '49.90',
-                    email: email,
-                    name: name,
-                    cpf: cpf,
-                    phone: phone,
-                }),
-            })
-            .then(r => r.json())
-            .then(result => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+        const cleanCardNumber = cardNumber.replace(/[\s-]/g, '');
+        const cleanCpf = cpf.replace(/\D/g, '');
+        const expirationMonth = parseInt(expMonth);
 
-                if (result.status === 'approved' || result.status === 'pending') {
-                    // Close modal and show full report
-                    closeTransitModal();
-                    showFullTransitReport();
-                } else {
-                    alert(t('paymentError') + ': ' + (result.error || result.status_detail));
-                }
-            })
-            .catch(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                alert(t('paymentError'));
-            });
-        } else {
+        mp.createCardToken({
+            cardNumber: cleanCardNumber,
+            cardholderName: cardName,
+            cardExpirationMonth: expirationMonth,
+            cardExpirationYear: expYear,
+            securityCode: cardCvv,
+            identificationType: 'CPF',
+            identificationNumber: cleanCpf,
+        })
+        .then(result => {
+            if (result.id) {
+                return fetch(window.PAYMENT_WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        token: result.id,
+                        paymentMethodId: result.payment_method_id,
+                        installments: installments,
+                        amount: '49.90',
+                        email: email,
+                        name: name,
+                        cpf: cpf,
+                        phone: phone,
+                    }),
+                });
+            } else {
+                throw new Error(t('cardError'));
+            }
+        })
+        .then(r => r.json())
+        .then(result => {
             btn.innerHTML = originalText;
             btn.disabled = false;
-            const errMsg = response.cause ? response.cause[0].description : t('paymentError');
-            alert(t('cardError') + ': ' + errMsg);
-        }
-    });
+
+            if (result.status === 'approved' || result.status === 'pending') {
+                closeTransitModal();
+                showFullTransitReport();
+            } else {
+                alert(t('paymentError') + ': ' + (result.error || result.status_detail));
+            }
+        })
+        .catch(err => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            let msg = t('cardError');
+            if (err && err.message) msg += ': ' + err.message;
+            else if (err && err.cause) msg += ': ' + JSON.stringify(err.cause);
+            else if (err) msg += ': ' + JSON.stringify(err);
+            alert(msg);
+        });
+    } catch (err) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert(t('paymentError') + ': ' + err.message);
+    }
 }
 
 window.openTransitModal = openTransitModal;
