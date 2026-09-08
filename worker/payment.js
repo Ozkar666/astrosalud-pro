@@ -22,7 +22,7 @@ export default {
     }
 
     try {
-      const { token, paymentMethodId, installments, amount, email, name, cpf, phone } = await request.json();
+      const { token, paymentMethodId, installments, amount, email, name = '', cpf = '', phone = '' } = await request.json();
 
       // Validate required fields
       if (!token || !email || !amount) {
